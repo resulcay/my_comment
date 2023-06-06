@@ -1,20 +1,24 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:my_comment/service/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/color_constants.dart';
-import '../service/navigation_service.dart';
-import '../service/path_service.dart';
 
-class NavBar extends StatelessWidget {
+class CurvedNavBar extends StatelessWidget {
+  const CurvedNavBar({
+    super.key,
+    required this.pageController,
+  });
+
   final PageController pageController;
-  const NavBar({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedLabelStyle: const TextStyle(fontSize: 17),
-      type: BottomNavigationBarType.fixed,
-      currentIndex: Provider.of<NavigationService>(context).pageIndex,
+    return CurvedNavigationBar(
+      color: ColorConstants.primaryColor,
+      backgroundColor: ColorConstants.primaryVariant,
+      index: Provider.of<NavigationService>(context).pageIndex,
       onTap: (index) {
         Provider.of<NavigationService>(context, listen: false)
             .changePageIndex(index);
@@ -23,27 +27,20 @@ class NavBar extends StatelessWidget {
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeInOut);
       },
-      items: [
-        navBarItem('home', 'Akış'),
-        navBarItem('fitness', 'Fitness'),
-        navBarItem('diet', 'Diyet'),
-        navBarItem('chart', 'İstatistik'),
-        navBarItem('user', 'Profil'),
+      items: const [
+        Icon(
+          Icons.home,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.feed,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.person,
+          color: Colors.white,
+        ),
       ],
     );
   }
-}
-
-BottomNavigationBarItem navBarItem(String imagePath, String label) {
-  return BottomNavigationBarItem(
-    label: label,
-    activeIcon: SizedBox(
-      height: 45,
-      child: Image.asset(PathService.imagePathProvider('$imagePath.png'),
-          color: ColorConstants.primaryVariant),
-    ),
-    icon: SizedBox(
-        height: 40,
-        child: Image.asset(PathService.imagePathProvider('$imagePath.png'))),
-  );
 }

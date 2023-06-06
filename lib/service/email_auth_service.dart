@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_comment/models/user_model.dart';
-import 'package:my_comment/screens/landing_screen.dart';
+import 'package:my_comment/service/auth_stream_controller.dart';
 
 class FirebaseService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -130,7 +130,7 @@ class FirebaseService extends ChangeNotifier {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const LandingScreen(),
+          builder: (context) => const AuthStreamController(),
         ));
   }
 }

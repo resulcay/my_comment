@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:my_comment/components/info_snackbar.dart';
 import 'package:my_comment/screens/onboarding_screen.dart';
 
-import 'home_screen.dart';
+import '../screens/home_screen.dart';
 
-class LandingScreen extends StatelessWidget {
-  const LandingScreen({super.key});
+class AuthStreamController extends StatelessWidget {
+  const AuthStreamController({super.key});
 
   @override
   Widget build(BuildContext context) {

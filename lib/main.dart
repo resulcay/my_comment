@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_comment/models/user_model.dart';
-import 'package:my_comment/screens/home_screen.dart';
+import 'package:my_comment/service/auth_stream_controller.dart';
 import 'package:my_comment/service/email_auth_service.dart';
 import 'package:my_comment/service/google_auth_service.dart';
 import 'package:my_comment/service/theme_service.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         title: 'My Comment',
         debugShowCheckedModeBanner: false,
         theme: ThemeService.themeConfiguration(context),
-        home: const ViewWidget(),
+        home: const AuthStreamController(),
       ),
     );
   }

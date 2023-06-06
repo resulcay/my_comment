@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../components/decorated_text_field.dart';
 import '../components/info_snackbar.dart';
 import '../service/email_auth_service.dart';
-import 'landing_screen.dart';
+import '../service/auth_stream_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   navigate() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const LandingScreen(),
+        builder: (context) => const AuthStreamController(),
       ),
     );
   }

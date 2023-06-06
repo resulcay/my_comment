@@ -5,6 +5,7 @@ import 'package:my_comment/service/path_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
+import '../service/facebook_auth_service.dart';
 import '../service/google_auth_service.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -13,17 +14,18 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstants.primaryVariant,
       body: SafeArea(
-        child: SizedBox(
-          height: context.height,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: SizedBox(
+            height: context.height,
+            width: context.width,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Image.asset(
                       width: context.width * .8,
@@ -119,7 +121,9 @@ class OnboardingScreen extends StatelessWidget {
                             child: SignInButton(
                               Buttons.facebook,
                               text: 'Giriş Yap',
-                              onPressed: () {},
+                              onPressed: () {
+                                FacebookAuthService().facebookLogin();
+                              },
                             ),
                           )
                         ],
