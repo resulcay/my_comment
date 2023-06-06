@@ -3,20 +3,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/auth_stream_controller.dart';
+import 'package:my_comment/service/user_service.dart';
+import 'package:provider/provider.dart';
 
 class FirebaseService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  getUserDetails() async {
+  getUserDetails(BuildContext context) async {
     User currentUser = _auth.currentUser!;
     return await _firestore
         .collection('users')
         .doc(currentUser.email)
         .get()
         .then((value) {
-      //  dynamic data = value.data();
-      //  return UserModel.fromMap(data);
+      dynamic data = value.data();
+      if (data != null) {
+        UserModel dynamicUser = UserModel.fromMap(data);
+        Provider.of<UserService>(context, listen: false).setUser(dynamicUser);
+      }
+      return value;
     });
   }
 
@@ -60,21 +66,27 @@ class FirebaseService extends ChangeNotifier {
     required String password,
     required String repeatedPassword,
     required String name,
-    required int height,
-    required int weight,
   }) async {
     String res = 'Bilinmeyen Hata!';
 
     try {
       if (email.isNotEmpty &&
           password.isNotEmpty &&
-          repeatedPassword.isNotEmpty) {
+          repeatedPassword.isNotEmpty &&
+          name.isNotEmpty) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
-        UserModel user = UserModel(id: 'llllllllllllllll');
+        UserModel user = UserModel(
+          id: cred.user!.uid,
+          name: name,
+          email: email,
+          movieComments: [],
+          showComments: [],
+          bookComments: [],
+        );
 
         await _firestore
             .collection('users')

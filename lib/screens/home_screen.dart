@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/screens/onboarding_screen.dart';
@@ -6,35 +7,19 @@ import 'package:my_comment/service/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 import '../components/nav_bar.dart';
+import '../service/user_service.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Future.microtask(() => {
-          FirebaseService().getUserDetails().then((value) => {
-                Provider.of<UserModel>(context, listen: false)
-                    .copyWith(id: 'aaaaaaaaaaaaaaa')
-              })
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-          future: FirebaseService().getUserDetails(),
+          future: FirebaseService().getUserDetails(context),
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -56,6 +41,7 @@ class _ViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PageController pageController = PageController();
+
     return Scaffold(
       //     backgroundColor: ColorConstants.primaryVariant,
       body: SafeArea(
@@ -65,13 +51,61 @@ class _ViewWidget extends StatelessWidget {
               Provider.of<NavigationService>(context, listen: false)
                   .changePageIndex(value),
           children: const [
+            First(),
             FlutterLogo(),
-            FlutterLogo(),
-            FlutterLogo(),
+            Third(),
           ],
         ),
       ),
       bottomNavigationBar: CurvedNavBar(pageController: pageController),
+    );
+  }
+}
+
+class First extends StatelessWidget {
+  const First({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    UserModel? user = Provider.of<UserService>(context).user;
+
+    if (user != null) {
+      return Center(
+        child: Column(
+          children: [
+            Text(user.id),
+            Text(user.name),
+            Text(user.email),
+            Text(user.movieComments.toString()),
+            Text(user.showComments.toString()),
+            Text(user.bookComments.toString()),
+          ],
+        ),
+      );
+    } else {
+      return Center(
+          child: Container(
+        height: 100,
+        width: 100,
+        color: Colors.lightGreenAccent,
+      ));
+    }
+  }
+}
+
+class Third extends StatelessWidget {
+  const Third({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+            Provider.of<NavigationService>(context, listen: false)
+                .changePageIndex(0);
+          },
+          child: const Text('EXIT')),
     );
   }
 }

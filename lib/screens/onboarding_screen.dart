@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:my_comment/service/path_service.dart';
-import 'package:provider/provider.dart';
 import 'package:sign_in_button/sign_in_button.dart';
-
 import '../service/facebook_auth_service.dart';
 import '../service/google_auth_service.dart';
 
@@ -110,9 +108,7 @@ class OnboardingScreen extends StatelessWidget {
                               Buttons.google,
                               text: 'Giriş Yap',
                               onPressed: () {
-                                Provider.of<GoogleSignInProvider>(context,
-                                        listen: false)
-                                    .googleLogin();
+                                GoogleSignInProvider().googleLogin();
                               },
                             ),
                           ),

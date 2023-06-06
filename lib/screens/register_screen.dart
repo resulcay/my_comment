@@ -17,8 +17,6 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController heightController = TextEditingController();
-  final TextEditingController weightController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passRepeatController = TextEditingController();
   @override
@@ -26,8 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
     nameController.dispose();
     emailController.dispose();
-    heightController.dispose();
-    weightController.dispose();
     passwordController.dispose();
     passRepeatController.dispose();
   }
@@ -36,8 +32,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String result = await FirebaseService().signUpUser(
       email: emailController.text,
       password: passwordController.text,
-      height: int.tryParse(heightController.text) ?? 180,
-      weight: int.tryParse(weightController.text) ?? 90,
       repeatedPassword: passRepeatController.text,
       name: nameController.text,
     );
@@ -85,20 +79,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintField: "Ad Soyad",
                       isObscured: false,
                       textFieldController: nameController,
-                    ),
-                    const SizedBox(height: 5),
-                    DecoratedTextField(
-                      hintField: "Boy(cm)",
-                      isObscured: false,
-                      textFieldController: heightController,
-                      type: TextInputType.number,
-                    ),
-                    const SizedBox(height: 5),
-                    DecoratedTextField(
-                      hintField: "Kilo(kg)",
-                      isObscured: false,
-                      textFieldController: weightController,
-                      type: TextInputType.number,
                     ),
                     const SizedBox(height: 5),
                     DecoratedTextField(

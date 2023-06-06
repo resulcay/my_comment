@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/auth_stream_controller.dart';
 import 'package:my_comment/service/email_auth_service.dart';
-import 'package:my_comment/service/google_auth_service.dart';
 import 'package:my_comment/service/theme_service.dart';
+import 'package:my_comment/service/user_service.dart';
 import 'package:provider/provider.dart';
 
 import 'service/navigation_service.dart';
@@ -31,8 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NavigationService()),
-        ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
-        ChangeNotifierProvider(create: (_) => UserModel(id: 'name')),
+        ChangeNotifierProvider(create: (_) => UserService()),
         ChangeNotifierProvider(create: (_) => FirebaseService()),
       ],
       child: MaterialApp(
