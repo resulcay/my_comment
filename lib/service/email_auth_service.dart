@@ -62,6 +62,7 @@ class FirebaseService extends ChangeNotifier {
   // }
 
   Future<String> signUpUser({
+    required BuildContext context,
     required String email,
     required String password,
     required String repeatedPassword,
@@ -73,7 +74,8 @@ class FirebaseService extends ChangeNotifier {
       if (email.isNotEmpty &&
           password.isNotEmpty &&
           repeatedPassword.isNotEmpty &&
-          name.isNotEmpty) {
+          name.isNotEmpty &&
+          (password == repeatedPassword)) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
@@ -91,10 +93,16 @@ class FirebaseService extends ChangeNotifier {
         await _firestore
             .collection('users')
             .doc(cred.user!.email)
-            .set(user.toMap());
+            .set(user.toMap())
+            .then((_) =>
+                Provider.of<UserService>(context, listen: false).setUser(user));
         res = 'success';
       } else {
-        res = 'Tüm alanları doldurun!';
+        if (password != repeatedPassword) {
+          res = 'Şifreler Eşleşmiyor';
+        } else {
+          res = 'Tüm alanları doldurun!';
+        }
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
@@ -108,14 +116,31 @@ class FirebaseService extends ChangeNotifier {
     return res;
   }
 
-  Future<String> loginUser(
-      {required String email, required String password}) async {
+  Future<String> loginUser({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
     String res = "Bilinmeyen Hata";
 
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((value) async {
+          if (value.user != null) {
+            await _firestore
+                .collection('users')
+                .doc(value.user!.email)
+                .get()
+                .then((snap) {
+              if (snap.data() != null) {
+                UserModel model = UserModel.fromMap(snap.data()!);
+                Provider.of<UserService>(context).setUser(model);
+              }
+            });
+          }
+        });
         res = "success";
       } else {
         res = "Tüm alanları doldurun!";

@@ -1,6 +1,7 @@
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:my_comment/screens/home_screen.dart';
 
 import '../components/decorated_text_field.dart';
 import '../components/info_snackbar.dart';
@@ -30,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void signUpUser() async {
     String result = await FirebaseService().signUpUser(
+      context: context,
       email: emailController.text,
       password: passwordController.text,
       repeatedPassword: passRepeatController.text,
@@ -48,17 +50,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   navigate() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const AuthStreamController(),
+        builder: (context) => const HomeScreen(),
       ),
     );
   }
 
   snackPassword() {
-    InfoSnackBar.showSnackBar('Şifreler Eşleşmiyor!', context);
+    if (mounted) {
+      InfoSnackBar.showSnackBar('Şifreler Eşleşmiyor!', context);
+    }
   }
 
   showSnack(String res) {
-    InfoSnackBar.showSnackBar(res, context);
+    if (mounted) {
+      InfoSnackBar.showSnackBar(res, context);
+    }
   }
 
   @override

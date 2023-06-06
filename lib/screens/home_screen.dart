@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_comment/models/user_model.dart';
-import 'package:my_comment/screens/onboarding_screen.dart';
+import 'package:my_comment/screens/login_screen.dart';
 import 'package:my_comment/service/email_auth_service.dart';
 import 'package:my_comment/service/navigation_service.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
             } else if (snapshot.hasData) {
               return const _ViewWidget();
             } else {
-              return const OnboardingScreen();
+              return const LoginScreen();
             }
           },
         ),
