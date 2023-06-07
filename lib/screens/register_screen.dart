@@ -1,12 +1,13 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:my_comment/screens/home_screen.dart';
+import 'package:my_comment/service/auth_stream_controller.dart';
+import 'package:my_comment/service/path_service.dart';
 
 import '../components/decorated_text_field.dart';
 import '../components/info_snackbar.dart';
 import '../service/email_auth_service.dart';
-import '../service/auth_stream_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -50,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   navigate() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const AuthStreamController(),
       ),
     );
   }
@@ -70,44 +71,55 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70.withOpacity(.9),
+      backgroundColor: ColorConstants.pureWhite,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(8),
               child: SizedBox(
+                height: context.height,
                 width: context.width,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    DecoratedTextField(
-                      hintField: "Ad Soyad",
-                      isObscured: false,
-                      textFieldController: nameController,
+                    SizedBox(
+                      height: 200,
+                      child: SvgPicture.asset(
+                          PathService.imagePathProvider('register.svg')),
                     ),
-                    const SizedBox(height: 5),
-                    DecoratedTextField(
-                      hintField: "E-mail",
-                      isObscured: false,
-                      textFieldController: emailController,
+                    const SizedBox(height: 20),
+                    Column(
+                      children: [
+                        DecoratedTextField(
+                          hintField: "Ad Soyad",
+                          isObscured: false,
+                          textFieldController: nameController,
+                        ),
+                        const SizedBox(height: 5),
+                        DecoratedTextField(
+                          hintField: "E-mail",
+                          isObscured: false,
+                          textFieldController: emailController,
+                        ),
+                        const SizedBox(height: 5),
+                        DecoratedTextField(
+                            hintField: "Şifre",
+                            isObscured: true,
+                            textFieldController: passwordController),
+                        const SizedBox(height: 5),
+                        DecoratedTextField(
+                            hintField: "Şifre Tekrar",
+                            isObscured: true,
+                            textFieldController: passRepeatController),
+                        const SizedBox(height: 5),
+                      ],
                     ),
-                    const SizedBox(height: 5),
-                    DecoratedTextField(
-                        hintField: "Şifre",
-                        isObscured: true,
-                        textFieldController: passwordController),
-                    const SizedBox(height: 5),
-                    DecoratedTextField(
-                        hintField: "Şifre Tekrar",
-                        isObscured: true,
-                        textFieldController: passRepeatController),
-                    const SizedBox(height: 5),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: ColorConstants.primaryColor,
+                          backgroundColor: ColorConstants.secondaryColor,
                           foregroundColor: ColorConstants.primaryVariant,
                           fixedSize: const Size(double.infinity, 60),
                           shape: RoundedRectangleBorder(

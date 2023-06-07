@@ -17,7 +17,7 @@ class CurvedNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
       color: ColorConstants.primaryColor,
-      backgroundColor: ColorConstants.primaryVariant,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       index: Provider.of<NavigationService>(context).pageIndex,
       onTap: (index) {
         Provider.of<NavigationService>(context, listen: false)

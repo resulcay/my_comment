@@ -11,6 +11,7 @@ class FirebaseService extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   getUserDetails(BuildContext context) async {
+    // await Future.delayed(Duration(seconds: 2));
     User currentUser = _auth.currentUser!;
     return await _firestore
         .collection('users')
@@ -21,8 +22,9 @@ class FirebaseService extends ChangeNotifier {
       if (data != null) {
         UserModel dynamicUser = UserModel.fromMap(data);
         Provider.of<UserService>(context, listen: false).setUser(dynamicUser);
+        return value;
       }
-      return value;
+      return null;
     });
   }
 
@@ -93,9 +95,7 @@ class FirebaseService extends ChangeNotifier {
         await _firestore
             .collection('users')
             .doc(cred.user!.email)
-            .set(user.toMap())
-            .then((_) =>
-                Provider.of<UserService>(context, listen: false).setUser(user));
+            .set(user.toMap());
         res = 'success';
       } else {
         if (password != repeatedPassword) {
@@ -125,22 +125,8 @@ class FirebaseService extends ChangeNotifier {
 
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((value) async {
-          if (value.user != null) {
-            await _firestore
-                .collection('users')
-                .doc(value.user!.email)
-                .get()
-                .then((snap) {
-              if (snap.data() != null) {
-                UserModel model = UserModel.fromMap(snap.data()!);
-                Provider.of<UserService>(context).setUser(model);
-              }
-            });
-          }
-        });
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
         res = "success";
       } else {
         res = "Tüm alanları doldurun!";

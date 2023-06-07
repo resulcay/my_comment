@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_comment/screens/register_screen.dart';
 import 'package:my_comment/service/auth_stream_controller.dart';
 import 'package:my_comment/service/email_auth_service.dart';
 import 'package:my_comment/service/theme_service.dart';
@@ -38,8 +37,7 @@ class MyApp extends StatelessWidget {
         title: 'My Comment',
         debugShowCheckedModeBanner: false,
         theme: ThemeService.themeConfiguration(context),
-        //  home: const AuthStreamController(),
-        home: const RegisterScreen(),
+        home: const AuthStreamController(),
       ),
     );
   }

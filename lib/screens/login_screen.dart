@@ -55,9 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Image.asset(
                       width: context.width * .8,
@@ -149,10 +148,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       MaterialButton(
                           minWidth: double.infinity,
-                          height: 45,
-                          color: ColorConstants.warningColor,
+                          height: 55,
+                          color: ColorConstants.secondaryColor,
                           onPressed: () => loginUser(),
-                          shape: const StadiumBorder(),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                           child: const Text(
                             'GİRİŞ YAP',
                             style: TextStyle(color: Colors.white, fontSize: 20),
