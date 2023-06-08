@@ -3,65 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/auth_stream_controller.dart';
-import 'package:my_comment/service/user_service.dart';
-import 'package:provider/provider.dart';
 
-class FirebaseService extends ChangeNotifier {
+class EmailAuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  getUserDetails(BuildContext context) async {
-    // await Future.delayed(Duration(seconds: 2));
-    User currentUser = _auth.currentUser!;
-    return await _firestore
-        .collection('users')
-        .doc(currentUser.email)
-        .get()
-        .then((value) {
-      dynamic data = value.data();
-      if (data != null) {
-        UserModel dynamicUser = UserModel.fromMap(data);
-        Provider.of<UserService>(context, listen: false).setUser(dynamicUser);
-        return value;
-      }
-      return null;
-    });
-  }
-
-  // Future<List<DietModel>> getAllDiets() async {
-  //   return await _firestore.collection('diets').get().then((value) {
-  //     return value.docs.map((e) => DietModel.fromMap(e.data())).toList();
-  //   });
-  // }
-
-  // getWorkoutByFilter(String filter) async {
-  //   await _firestore
-  //       .collection('workouts')
-  //       .where('title', isEqualTo: filter)
-  //       .get()
-  //       .then((value) {
-  //     List<WorkoutModel> models =
-  //         value.docs.map((e) => WorkoutModel.fromMap(e.data())).toList();
-  //     workouts = models;
-  //     notifyListeners();
-  //   });
-  // }
-
-  // updateWorkout({
-  //   required UserModel user,
-  //   Map<String, dynamic>? map,
-  //   int? height,
-  //   int? weight,
-  //   String? name,
-  // }) async {
-  //   User currentUser = _auth.currentUser!;
-  //   await _firestore.collection('users').doc(currentUser.email).update({
-  //     'workoutInfo': map ?? user.workoutInfo,
-  //     'height': height ?? user.height,
-  //     'weight': weight ?? user.weight,
-  //     'name': name ?? user.name,
-  //   });
-  // }
 
   Future<String> signUpUser({
     required BuildContext context,

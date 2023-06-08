@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
-class UserModel extends ChangeNotifier {
+class UserModel {
   final String id;
   final String name;
   final String email;

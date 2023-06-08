@@ -16,6 +16,7 @@ class CurvedNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
+      height: 60,
       color: ColorConstants.primaryColor,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       index: Provider.of<NavigationService>(context).pageIndex,
@@ -33,11 +34,15 @@ class CurvedNavBar extends StatelessWidget {
           color: Colors.white,
         ),
         Icon(
-          Icons.feed,
+          Icons.movie,
           color: Colors.white,
         ),
         Icon(
-          Icons.person,
+          Icons.tv,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.menu_book,
           color: Colors.white,
         ),
       ],

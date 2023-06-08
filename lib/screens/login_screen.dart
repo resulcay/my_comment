@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginUser() async {
-    String result = await FirebaseService().loginUser(
+    String result = await EmailAuthService().loginUser(
       context: context,
       email: emailController.text,
       password: passwordController.text,

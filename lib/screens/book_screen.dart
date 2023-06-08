@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:my_comment/components/book_card.dart';
+import 'package:my_comment/components/title_widget.dart';
+import 'package:my_comment/constants/color_constants.dart';
+import 'package:my_comment/extensions/media_query_extension.dart';
+import 'package:my_comment/models/book_model.dart';
+import 'package:my_comment/service/firebase_service.dart';
+
+class BookScreen extends StatelessWidget {
+  const BookScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: FirebaseService().getAllBooks(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<BookModel> books = snapshot.data!;
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: context.height,
+              width: context.width,
+              child: Column(
+                children: [
+                  const TitleWidget(
+                    title: 'KİTAPLAR',
+                    colors: [
+                      ColorConstants.lavender,
+                      ColorConstants.pureBlack,
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: books.length,
+                      itemBuilder: (context, index) =>
+                          BookCard(book: books[index]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+}

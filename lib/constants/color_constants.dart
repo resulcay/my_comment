@@ -5,6 +5,8 @@ class ColorConstants {
   static const secondaryColor = Color.fromARGB(255, 122, 21, 60);
   static const primaryVariant = Color.fromARGB(255, 209, 192, 189);
   static const okColor = Colors.green;
+  static const richBlack = Color(0xff0c1821);
+  static const lavender = Color(0xffccc9dc);
   static const iconColor = Color(0xFF0DBDBD);
   static const cardColor = Color(0xFFC3E8FF);
   static const cardColorVariant = Color(0xFFE8C5F7);
