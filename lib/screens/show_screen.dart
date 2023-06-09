@@ -4,6 +4,7 @@ import 'package:my_comment/components/title_widget.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:my_comment/models/show_model.dart';
+import 'package:my_comment/screens/comment_screen.dart';
 import 'package:my_comment/service/firebase_service.dart';
 
 class ShowScreen extends StatelessWidget {
@@ -34,8 +35,10 @@ class ShowScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemCount: shows.length,
-                      itemBuilder: (context, index) =>
-                          ShowCard(show: shows[index]),
+                      itemBuilder: (context, index) => ShowCard(
+                        show: shows[index],
+                        function: () => _onTap(context, shows[index]),
+                      ),
                     ),
                   ),
                 ],
@@ -46,5 +49,13 @@ class ShowScreen extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       },
     );
+  }
+
+  _onTap(BuildContext context, Object object) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CommentScreen(object: object),
+        ));
   }
 }

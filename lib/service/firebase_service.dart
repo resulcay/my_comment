@@ -12,7 +12,7 @@ class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  getUserDetails(BuildContext context) async {
+  Future<UserModel?> getUserDetails(BuildContext context) async {
     User currentUser = _auth.currentUser!;
     return await _firestore
         .collection('users')
@@ -23,10 +23,26 @@ class FirebaseService {
       if (data != null) {
         UserModel dynamicUser = UserModel.fromMap(data);
         Provider.of<UserService>(context, listen: false).setUser(dynamicUser);
-        return value;
+        return dynamicUser;
       }
       return null;
     });
+  }
+
+  Future<UserModel> getUserById(String id) async {
+    return await _firestore
+        .collection('users')
+        .where('id', isEqualTo: id)
+        .get()
+        .then((value) => UserModel.fromMap(value.docs.first.data()));
+  }
+
+  addComment(String movieId, Map<String, dynamic> updatedMap) async {
+    await _firestore
+        .collection('movies')
+        .where('id', isEqualTo: movieId)
+        .get()
+        .then((value) => value.docs.first.reference.update(updatedMap));
   }
 
   Future<List<MovieModel>> getAllMovies() async {

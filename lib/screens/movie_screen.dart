@@ -4,6 +4,7 @@ import 'package:my_comment/components/title_widget.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:my_comment/models/movie_model.dart';
+import 'package:my_comment/screens/comment_screen.dart';
 import 'package:my_comment/service/firebase_service.dart';
 
 class MovieScreen extends StatelessWidget {
@@ -35,8 +36,10 @@ class MovieScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemCount: movies.length,
-                      itemBuilder: (context, index) =>
-                          MovieCard(movie: movies[index]),
+                      itemBuilder: (context, index) => MovieCard(
+                        movie: movies[index],
+                        function: () => _onTap(context, movies[index]),
+                      ),
                     ),
                   ),
                 ],
@@ -47,5 +50,13 @@ class MovieScreen extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       },
     );
+  }
+
+  _onTap(BuildContext context, Object object) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CommentScreen(object: object),
+        ));
   }
 }

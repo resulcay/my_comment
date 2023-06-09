@@ -4,6 +4,7 @@ import 'package:my_comment/components/title_widget.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:my_comment/models/book_model.dart';
+import 'package:my_comment/screens/comment_screen.dart';
 import 'package:my_comment/service/firebase_service.dart';
 
 class BookScreen extends StatelessWidget {
@@ -34,8 +35,10 @@ class BookScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemCount: books.length,
-                      itemBuilder: (context, index) =>
-                          BookCard(book: books[index]),
+                      itemBuilder: (context, index) => BookCard(
+                        book: books[index],
+                        function: () => _onTap(context, books[index]),
+                      ),
                     ),
                   ),
                 ],
@@ -46,5 +49,13 @@ class BookScreen extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       },
     );
+  }
+
+  _onTap(BuildContext context, Object object) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CommentScreen(object: object),
+        ));
   }
 }
