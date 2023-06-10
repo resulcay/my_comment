@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:linear_progress_bar/linear_progress_bar.dart';
+import 'package:my_comment/components/interactive_progress_bar.dart';
 import 'package:my_comment/constants/color_constants.dart';
+import 'package:my_comment/enums/category_enum.dart';
 import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/firebase_service.dart';
 import 'package:my_comment/service/path_service.dart';
@@ -15,8 +15,11 @@ class FeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserModel user = Provider.of<UserService>(context).user!;
-
+    int movieCount = user.movieComments.length;
+    int showCount = user.showComments.length;
+    int bookCount = user.bookComments.length;
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -51,89 +54,73 @@ class FeedScreen extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
+          SizedBox(
             height: 200,
             width: double.infinity,
             child: Card(
-                color: ColorConstants.secondaryColor,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Bu ay; 10 film, 5 dizi ve 12 kitap bitirdiniz.',
-                      style: TextStyle(
-                          color: ColorConstants.pureWhite,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w400),
-                    ),
+              color: ColorConstants.richBlack.withOpacity(.8),
+              margin: EdgeInsets.zero,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Şu ana dek; $movieCount film, $showCount dizi ve $bookCount kitap hakkında yorum yaptınız',
+                    style: const TextStyle(
+                        color: ColorConstants.pureWhite,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400),
                   ),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: LinearProgressBar(
-                maxSteps: 100,
-                progressType: LinearProgressBar.progressTypeLinear,
-                currentStep: 25,
-                minHeight: 15,
-                progressColor: Colors.red,
-                backgroundColor: Colors.grey,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: LinearProgressBar(
-                maxSteps: 100,
-                progressType: LinearProgressBar.progressTypeLinear,
-                currentStep: 50,
-                minHeight: 15,
-                progressColor: Colors.red,
-                backgroundColor: Colors.grey,
-              ),
-            ),
+          InteractiveProgressBar(
+            initialStep: movieCount,
+            category: Category.movie,
+            barColor: ColorConstants.iconColor,
+            function: FirebaseService().getAllMovies(),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: LinearProgressBar(
-                maxSteps: 100,
-                progressType: LinearProgressBar.progressTypeLinear,
-                currentStep: 70,
-                minHeight: 15,
-                progressColor: Colors.red,
-                backgroundColor: Colors.grey,
-              ),
-            ),
+          InteractiveProgressBar(
+            initialStep: showCount,
+            category: Category.show,
+            barColor: ColorConstants.richBlack,
+            function: FirebaseService().getAllShows(),
           ),
-          ListTile(
-            onTap: () {
-              FirebaseService().addMovie();
-            },
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Image.network(
-                  height: 200,
-                  fit: BoxFit.cover,
-                  'https://tr.web.img4.acsta.net/c_310_420/pictures/14/10/09/15/52/150664.jpg'),
-            ),
-            trailing: const FlutterLogo(),
-            title: const Text('data'),
-            splashColor: Colors.red,
+          InteractiveProgressBar(
+            initialStep: bookCount,
+            category: Category.book,
+            barColor: ColorConstants.starColor,
+            function: FirebaseService().getAllBooks(),
           ),
-          Text(user.email),
-          Text(user.id),
-          ElevatedButton(
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut();
+                FirebaseService().removeAllComments(context, 'movie');
               },
-              child: const Text('EXIT')),
+              child: const Text('Remove all movie comment and rating data'),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                FirebaseService().removeAllComments(context, 'show');
+              },
+              child: const Text('Remove all show comment and rating data'),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                FirebaseService().removeAllComments(context, 'book');
+              },
+              child: const Text('Remove all book comment and rating data'),
+            ),
+          ),
         ],
       ),
     );

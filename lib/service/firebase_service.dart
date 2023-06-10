@@ -37,12 +37,56 @@ class FirebaseService {
         .then((value) => UserModel.fromMap(value.docs.first.data()));
   }
 
-  addComment(String movieId, Map<String, dynamic> updatedMap) async {
+  addComment(
+    BuildContext context,
+    Object object,
+    String objectId,
+    Map<String, dynamic> updatedMap,
+    String collection,
+  ) async {
+    UserModel? user = await getUserDetails(context);
+    if (object is MovieModel) {
+      List<String> commentsWithId = user!.movieComments;
+      commentsWithId.add(objectId);
+      await _firestore
+          .collection('users')
+          .doc(user.email)
+          .update({'movieComments': commentsWithId});
+    } else if (object is ShowModel) {
+      List<String> commentsWithId = user!.showComments;
+      commentsWithId.add(objectId);
+      await _firestore
+          .collection('users')
+          .doc(user.email)
+          .update({'showComments': commentsWithId});
+    } else {
+      List<String> commentsWithId = user!.bookComments;
+      commentsWithId.add(objectId);
+      await _firestore
+          .collection('users')
+          .doc(user.email)
+          .update({'bookComments': commentsWithId});
+    }
+
     await _firestore
-        .collection('movies')
-        .where('id', isEqualTo: movieId)
+        .collection(collection)
+        .where('id', isEqualTo: objectId)
         .get()
         .then((value) => value.docs.first.reference.update(updatedMap));
+  }
+
+  removeAllComments(BuildContext context, String collection) async {
+    await _firestore.collection('${collection}s').get().then((value) {
+      for (var i = 0; i < value.docs.length; i++) {
+        value.docs[i].reference.update({'comments': {}});
+        value.docs[i].reference.update({'ratings': {}});
+      }
+    }).then((value) async {
+      UserModel? user = await getUserDetails(context);
+      await _firestore.collection('users').doc(user!.email).update({
+        '${collection}Comments': [],
+      });
+    });
   }
 
   Future<List<MovieModel>> getAllMovies() async {
@@ -80,33 +124,4 @@ class FirebaseService {
       return value.docs.map((e) => BookModel.fromMap(e.data())).toList();
     });
   }
-
-  // getWorkoutByFilter(String filter) async {
-  //   await _firestore
-  //       .collection('workouts')
-  //       .where('title', isEqualTo: filter)
-  //       .get()
-  //       .then((value) {
-  //     List<WorkoutModel> models =
-  //         value.docs.map((e) => WorkoutModel.fromMap(e.data())).toList();
-  //     workouts = models;
-  //     notifyListeners();
-  //   });
-  // }
-
-  // updateWorkout({
-  //   required UserModel user,
-  //   Map<String, dynamic>? map,
-  //   int? height,
-  //   int? weight,
-  //   String? name,
-  // }) async {
-  //   User currentUser = _auth.currentUser!;
-  //   await _firestore.collection('users').doc(currentUser.email).update({
-  //     'workoutInfo': map ?? user.workoutInfo,
-  //     'height': height ?? user.height,
-  //     'weight': weight ?? user.weight,
-  //     'name': name ?? user.name,
-  //   });
-  // }
 }

@@ -37,12 +37,30 @@ class TopSection extends StatelessWidget {
                       child: Image.network(height: 150, movie.imagePath)),
                   Expanded(
                     child: Center(
-                      child: Text(
-                        movie.name,
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            movie.name,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            '${movie.duration.toString()} dakika',
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            '${movie.imdb.toString()} imdb',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -68,28 +86,43 @@ class TopSection extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    Hero(
-                        tag: show.id,
-                        child: Image.network(height: 150, show.imagePath)),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          show.name,
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w400,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Hero(
+                      tag: show.id,
+                      child: Image.network(height: 150, show.imagePath)),
+                  Expanded(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            show.name,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
+                          Text(
+                            '${show.season.toString()} sezon',
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            '${show.episodes.toString()} bölüm',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],
@@ -97,6 +130,7 @@ class TopSection extends StatelessWidget {
       );
     } else {
       BookModel book = object as BookModel;
+
       return SizedBox(
         width: double.infinity,
         child: Column(
@@ -111,28 +145,44 @@ class TopSection extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    Hero(
-                        tag: book.id,
-                        child: Image.network(height: 150, book.imagePath)),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          book.name,
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w400,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Hero(
+                      tag: book.id,
+                      child: Image.network(height: 150, book.imagePath)),
+                  Expanded(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            book.name,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
+                          Text(
+                            textAlign: TextAlign.center,
+                            book.author.toString(),
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            '${book.pages.toString()} sayfa',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],

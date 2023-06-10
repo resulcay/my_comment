@@ -52,7 +52,7 @@ class MovieScreen extends StatelessWidget {
     );
   }
 
-  _onTap(BuildContext context, Object object) {
+  _onTap(BuildContext context, MovieModel object) {
     Navigator.push(
         context,
         MaterialPageRoute(

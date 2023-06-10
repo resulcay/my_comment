@@ -1,16 +1,18 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:my_comment/models/book_model.dart';
+import 'package:my_comment/models/show_model.dart';
 import 'package:rate/rate.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 import 'package:my_comment/models/movie_model.dart';
-import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/firebase_service.dart';
 
 class AddCommentDialog extends StatefulWidget {
-  final MovieModel movie;
+  final Object object;
   const AddCommentDialog({
     Key? key,
-    required this.movie,
+    required this.object,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
   Widget build(BuildContext context) {
     double star = 0.0;
     TextEditingController controller = TextEditingController();
+
     return AlertDialog(
       scrollable: true,
       title: const Center(child: Text('Yorum Yap')),
@@ -35,7 +38,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
               iconSize: 40,
               color: ColorConstants.starColor,
               allowHalf: true,
-              allowClear: false,
+              allowClear: true,
               initialValue: 3.0,
               readOnly: false,
               onChange: (value) {
@@ -52,23 +55,76 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
             ),
             OutlinedButton(
                 onPressed: () async {
-                  UserModel? user =
-                      await FirebaseService().getUserDetails(context);
-                  String refinedComment = controller.text.trim();
-                  if (star == 0.0) {
-                    print('object');
-                  }
-                  if (refinedComment.isNotEmpty && star != 0.0) {
-                    widget.movie.comments[user!.id] = refinedComment;
-                    widget.movie.ratings[user.id] = star;
-                    FirebaseService()
-                        .addComment(widget.movie.id, widget.movie.toMap());
-                  }
+                  await FirebaseService().getUserDetails(context).then((user) {
+                    String refinedComment = controller.text.trim();
+                    _infoBar(star, refinedComment);
+                    if (refinedComment.isNotEmpty && star != 0.0) {
+                      if (widget.object is MovieModel) {
+                        MovieModel movie = widget.object as MovieModel;
+                        movie.comments[user!.id] = refinedComment;
+                        movie.ratings[user.id] = star;
+                        FirebaseService()
+                            .addComment(context, movie, movie.id, movie.toMap(),
+                                'movies')
+                            .then((_) => Flushbar(
+                                  backgroundColor:
+                                      ColorConstants.confirmedColor,
+                                  message: 'Başarılı',
+                                  duration: const Duration(seconds: 2),
+                                ).show(context))
+                            .then((_) => Navigator.pop(context));
+                      } else if (widget.object is ShowModel) {
+                        ShowModel show = widget.object as ShowModel;
+                        show.comments[user!.id] = refinedComment;
+                        show.ratings[user.id] = star;
+                        FirebaseService()
+                            .addComment(
+                                context, show, show.id, show.toMap(), 'shows')
+                            .then((_) => Flushbar(
+                                  backgroundColor:
+                                      ColorConstants.confirmedColor,
+                                  message: 'Başarılı',
+                                  duration: const Duration(seconds: 2),
+                                ).show(context))
+                            .then((_) => Navigator.pop(context));
+                      } else {
+                        BookModel book = widget.object as BookModel;
+                        book.comments[user!.id] = refinedComment;
+                        book.ratings[user.id] = star;
+                        FirebaseService()
+                            .addComment(
+                                context, book, book.id, book.toMap(), 'books')
+                            .then((_) => Flushbar(
+                                  backgroundColor:
+                                      ColorConstants.confirmedColor,
+                                  message: 'Başarılı',
+                                  duration: const Duration(seconds: 2),
+                                ).show(context))
+                            .then((_) => Navigator.pop(context));
+                      }
+                    }
+                  });
                 },
                 child: const Text('EKLE'))
           ],
         ),
       ),
     );
+  }
+
+  _infoBar(double star, String refinedComment) {
+    if (star == 0.0) {
+      Flushbar(
+        backgroundColor: ColorConstants.starColor,
+        message: 'Oylama Yapınız',
+        duration: const Duration(seconds: 2),
+      ).show(context);
+    } else if (refinedComment.isEmpty) {
+      Flushbar(
+        backgroundColor: ColorConstants.starColor,
+        message: 'Yorum boş olamaz!',
+        duration: const Duration(seconds: 2),
+      ).show(context);
+    }
   }
 }
