@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/user_model.dart';
 
 class UserService extends ChangeNotifier {
@@ -11,13 +10,20 @@ class UserService extends ChangeNotifier {
   }
 
   changeUserProperties({
-    String? email,
+    String? id,
     String? name,
-    Map<String, dynamic>? workoutInfo,
+    String? email,
+    List<String>? movieComments,
+    List<String>? showComments,
+    List<String>? bookComments,
   }) {
     user = user?.copyWith(
-      email: email,
+      id: id,
       name: name,
+      email: email,
+      movieComments: movieComments,
+      showComments: showComments,
+      bookComments: bookComments,
     );
     notifyListeners();
   }

@@ -1,2 +1,14 @@
-// Özel metinlerin bulunduğu API-Key vs. bulunduğu ana sınıftır.
-class TextConstants {}
+class TextConstants {
+  static const List<String> tags = [
+    'Yeni başlayan',
+    'Meraklı',
+    'İlgili',
+    'Tutkulu',
+    'Seçici',
+    'Bilgili',
+    'Eleştirmen',
+    'Analist',
+    'Bağımlı',
+    'İlham Veren',
+  ];
+}

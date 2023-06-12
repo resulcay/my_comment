@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:my_comment/components/activity_bar.dart';
+import 'package:my_comment/constants/text_constants.dart';
 import 'package:my_comment/enums/category_enum.dart';
+import 'package:my_comment/models/user_model.dart';
+import 'package:my_comment/service/user_service.dart';
+import 'package:provider/provider.dart';
 
 class InteractiveProgressBar extends StatelessWidget {
   const InteractiveProgressBar({
     super.key,
-    required this.initialStep,
     required this.barColor,
     required this.category,
     required this.function,
   });
 
-  final int initialStep;
   final Color barColor;
   final Category category;
   final Future<Object?>? function;
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = Provider.of<UserService>(context).user!;
+    int movieCount = user.movieComments.length;
+    int showCount = user.showComments.length;
+    int bookCount = user.bookComments.length;
     return FutureBuilder(
         future: function,
         builder: (context, snapshot) {
@@ -29,56 +35,129 @@ class InteractiveProgressBar extends StatelessWidget {
           } else {
             List<Object> array = snapshot.data as List<Object>;
             int length = array.length;
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Builder(builder: (context) {
-                    if (Category.movie.name == category.name) {
-                      return Row(
+            return Padding(
+              padding: const EdgeInsets.all(4),
+              child: Builder(builder: (context) {
+                List<String> tags = TextConstants.tags;
+                if (Category.movie.name == category.name) {
+                  return Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Text('FİLM'),
+                          Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Text(
+                              'FİLM',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                           ),
-                          const Text('Sinematör'),
-                          Text('$initialStep/$length')
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(width: 1)),
+                            child: Text(
+                              (tags.length <= length &&
+                                      tags.length >= movieCount)
+                                  ? tags[movieCount]
+                                  : tags.last,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          Text(
+                            '$movieCount/$length',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          )
                         ],
-                      );
-                    } else if (Category.show.name == category.name) {
-                      return Row(
+                      ),
+                      ActivityBar(
+                        currentStep: movieCount,
+                        maxSteps: length,
+                        color: barColor,
+                      )
+                    ],
+                  );
+                } else if (Category.show.name == category.name) {
+                  return Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Text('DİZİ'),
+                          Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Text(
+                              'DİZİ',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                           ),
-                          const Text('Dizi Delisi'),
-                          Text('$initialStep/$length')
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(width: 1)),
+                            child: Text(
+                              (tags.length <= length &&
+                                      tags.length >= showCount)
+                                  ? tags[showCount]
+                                  : tags.last,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          Text(
+                            '$showCount/$length',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          )
                         ],
-                      );
-                    } else {
-                      return Row(
+                      ),
+                      ActivityBar(
+                        currentStep: showCount,
+                        maxSteps: length,
+                        color: barColor,
+                      )
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Text('KİTAP'),
+                          Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Text(
+                              'KİTAP',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                           ),
-                          const Text('Kitap Kurdu'),
-                          Text('$initialStep/$length')
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(width: 1)),
+                            child: Text(
+                              (tags.length <= length &&
+                                      tags.length >= bookCount)
+                                  ? tags[bookCount]
+                                  : tags.last,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          Text(
+                            '$bookCount/$length',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          )
                         ],
-                      );
-                    }
-                  }),
-                ),
-                ActivityBar(
-                  currentStep: initialStep,
-                  maxSteps: length,
-                  color: barColor,
-                ),
-              ],
+                      ),
+                      ActivityBar(
+                        currentStep: bookCount,
+                        maxSteps: length,
+                        color: barColor,
+                      )
+                    ],
+                  );
+                }
+              }),
             );
           }
         });

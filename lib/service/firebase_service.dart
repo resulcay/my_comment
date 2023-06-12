@@ -75,16 +75,42 @@ class FirebaseService {
         .then((value) => value.docs.first.reference.update(updatedMap));
   }
 
-  removeAllComments(BuildContext context, String collection) async {
+  removeCurrentUserCommentData(BuildContext context, String collection) async {
+    await _firestore.collection('${collection}s').get().then((value) async {
+      UserModel user = Provider.of<UserService>(context, listen: false).user!;
+      for (var i = 0; i < value.docs.length; i++) {
+        Map<String, dynamic> dynamicCommentMap =
+            value.docs[i].data()['comments'];
+        Map<String, dynamic> dynamicRatingMap = value.docs[i].data()['ratings'];
+        if (dynamicCommentMap.containsKey(user.id) ||
+            dynamicRatingMap.containsKey(user.id)) {
+          dynamicCommentMap.remove(user.id);
+          dynamicRatingMap.remove(user.id);
+          value.docs[i].reference.update({'comments': dynamicCommentMap});
+          value.docs[i].reference.update({'ratings': dynamicRatingMap});
+        }
+      }
+    }).then((_) async {
+      UserModel user = Provider.of<UserService>(context, listen: false).user!;
+      await _firestore.collection('users').doc(user.email).update({
+        '${collection}Comments': [],
+      });
+    });
+  }
+
+  removeAllUsersCommentData(String collection) async {
     await _firestore.collection('${collection}s').get().then((value) {
       for (var i = 0; i < value.docs.length; i++) {
         value.docs[i].reference.update({'comments': {}});
         value.docs[i].reference.update({'ratings': {}});
       }
-    }).then((value) async {
-      UserModel? user = await getUserDetails(context);
-      await _firestore.collection('users').doc(user!.email).update({
-        '${collection}Comments': [],
+    }).then((_) async {
+      await _firestore.collection('users').get().then((data) {
+        for (var i = 0; i < data.docs.length; i++) {
+          data.docs[i].reference.update({
+            '${collection}Comments': [],
+          });
+        }
       });
     });
   }
@@ -123,5 +149,9 @@ class FirebaseService {
     return await _firestore.collection('books').get().then((value) {
       return value.docs.map((e) => BookModel.fromMap(e.data())).toList();
     });
+  }
+
+  logOut() {
+    _auth.signOut();
   }
 }

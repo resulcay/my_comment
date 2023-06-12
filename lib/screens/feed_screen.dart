@@ -25,17 +25,13 @@ class FeedScreen extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: SvgPicture.asset(
-                      alignment: Alignment.centerLeft,
-                      PathService.imagePathProvider('welcome.svg')),
-                ),
+              SizedBox(
+                height: 100,
+                width: 100,
+                child: Image.asset(
+                    alignment: Alignment.centerLeft,
+                    PathService.imagePathProvider('greeting.gif')),
               ),
               Text(
                 'Merhaba, ',
@@ -45,6 +41,8 @@ class FeedScreen extends StatelessWidget {
                 child: Text(
                   user.name,
                   overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  maxLines: 2,
                   style: const TextStyle(
                     fontSize: 25,
                     fontStyle: FontStyle.italic,
@@ -54,41 +52,36 @@ class FeedScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 200,
-            width: double.infinity,
-            child: Card(
-              color: ColorConstants.richBlack.withOpacity(.8),
-              margin: EdgeInsets.zero,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Şu ana dek; $movieCount film, $showCount dizi ve $bookCount kitap hakkında yorum yaptınız',
-                    style: const TextStyle(
-                        color: ColorConstants.pureWhite,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400),
-                  ),
+          const SizedBox(height: 10),
+          Card(
+            color: ColorConstants.richBlack.withOpacity(.8),
+            margin: EdgeInsets.zero,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Şu ana dek; $movieCount film, $showCount dizi ve $bookCount kitap hakkında yorum yaptınız',
+                  style: const TextStyle(
+                      color: ColorConstants.pureWhite,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             ),
           ),
+          const SizedBox(height: 20),
           InteractiveProgressBar(
-            initialStep: movieCount,
             category: Category.movie,
             barColor: ColorConstants.iconColor,
             function: FirebaseService().getAllMovies(),
           ),
           InteractiveProgressBar(
-            initialStep: showCount,
             category: Category.show,
             barColor: ColorConstants.richBlack,
             function: FirebaseService().getAllShows(),
           ),
           InteractiveProgressBar(
-            initialStep: bookCount,
             category: Category.book,
             barColor: ColorConstants.starColor,
             function: FirebaseService().getAllBooks(),
@@ -98,27 +91,76 @@ class FeedScreen extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                FirebaseService().removeAllComments(context, 'movie');
+                FirebaseService()
+                    .removeCurrentUserCommentData(context, 'movie');
+                Provider.of<UserService>(context, listen: false)
+                    .changeUserProperties(movieComments: []);
               },
-              child: const Text('Remove all movie comment and rating data'),
+              child: const Text('Kullanıcı film verisini sil'),
             ),
           ),
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                FirebaseService().removeAllComments(context, 'show');
+                FirebaseService().removeCurrentUserCommentData(context, 'show');
+                Provider.of<UserService>(context, listen: false)
+                    .changeUserProperties(showComments: []);
               },
-              child: const Text('Remove all show comment and rating data'),
+              child: const Text('Kullanıcı dizi verisini sil'),
             ),
           ),
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                FirebaseService().removeAllComments(context, 'book');
+                FirebaseService().removeCurrentUserCommentData(context, 'book');
+                Provider.of<UserService>(context, listen: false)
+                    .changeUserProperties(bookComments: []);
               },
-              child: const Text('Remove all book comment and rating data'),
+              child: const Text('Kullanıcı kitap verisini sil'),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                FirebaseService().removeAllUsersCommentData('movie');
+                Provider.of<UserService>(context, listen: false)
+                    .changeUserProperties(movieComments: []);
+              },
+              child: const Text('Tüm film verisini sil'),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                FirebaseService().removeAllUsersCommentData('show');
+                Provider.of<UserService>(context, listen: false)
+                    .changeUserProperties(showComments: []);
+              },
+              child: const Text('Tüm dizi verisini sil'),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                FirebaseService().removeAllUsersCommentData('book');
+                Provider.of<UserService>(context, listen: false)
+                    .changeUserProperties(bookComments: []);
+              },
+              child: const Text('Tüm film verisini sil'),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                FirebaseService().logOut();
+              },
+              child: const Text('ÇIKIŞ YAP'),
             ),
           ),
         ],

@@ -58,7 +58,9 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
                   await FirebaseService().getUserDetails(context).then((user) {
                     String refinedComment = controller.text.trim();
                     _infoBar(star, refinedComment);
-                    if (refinedComment.isNotEmpty && star != 0.0) {
+                    if (refinedComment.isNotEmpty &&
+                        star != 0.0 &&
+                        refinedComment.length >= 50) {
                       if (widget.object is MovieModel) {
                         MovieModel movie = widget.object as MovieModel;
                         movie.comments[user!.id] = refinedComment;
@@ -116,13 +118,19 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
     if (star == 0.0) {
       Flushbar(
         backgroundColor: ColorConstants.starColor,
-        message: 'Oylama Yapınız',
+        message: 'Oylama Yapınız!',
         duration: const Duration(seconds: 2),
       ).show(context);
     } else if (refinedComment.isEmpty) {
       Flushbar(
         backgroundColor: ColorConstants.starColor,
         message: 'Yorum boş olamaz!',
+        duration: const Duration(seconds: 2),
+      ).show(context);
+    } else if (refinedComment.length < 50) {
+      Flushbar(
+        backgroundColor: ColorConstants.starColor,
+        message: 'Yorum en az 50 karakterden oluşmalı!',
         duration: const Duration(seconds: 2),
       ).show(context);
     }
