@@ -36,7 +36,7 @@ class ShowCard extends StatelessWidget {
                 child: Hero(
                   tag: show.id,
                   child: Image.network(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     show.imagePath,
                     loadingBuilder: (context, child, loadingProgress) =>
                         NetworkImageHandler.imageNetworkHandler(

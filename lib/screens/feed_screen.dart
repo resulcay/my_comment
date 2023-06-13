@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:my_comment/components/interactive_progress_bar.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/enums/category_enum.dart';
@@ -121,39 +120,15 @@ class FeedScreen extends StatelessWidget {
               child: const Text('Kullanıcı kitap verisini sil'),
             ),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () {
-                FirebaseService().removeAllUsersCommentData('movie');
-                Provider.of<UserService>(context, listen: false)
-                    .changeUserProperties(movieComments: []);
-              },
-              child: const Text('Tüm film verisini sil'),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () {
-                FirebaseService().removeAllUsersCommentData('show');
-                Provider.of<UserService>(context, listen: false)
-                    .changeUserProperties(showComments: []);
-              },
-              child: const Text('Tüm dizi verisini sil'),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () {
-                FirebaseService().removeAllUsersCommentData('book');
-                Provider.of<UserService>(context, listen: false)
-                    .changeUserProperties(bookComments: []);
-              },
-              child: const Text('Tüm film verisini sil'),
-            ),
-          ),
+          // SizedBox(
+          //   width: double.infinity,
+          //   child: OutlinedButton(
+          //     onPressed: () {
+          //       FirebaseService().removeAllUsersCommentData(context, 'movie');
+          //     },
+          //     child: const Text('Tüm film verisini sil'),
+          //   ),
+          // ),
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(

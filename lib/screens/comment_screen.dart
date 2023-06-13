@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_comment/components/comment_section.dart';
 import 'package:my_comment/components/top_section.dart';
+import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
 
 class CommentScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class CommentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstants.lavender,
       body: SafeArea(
         child: SizedBox(
           height: context.height,
@@ -20,7 +22,7 @@ class CommentScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TopSection(object: object),
-                const Divider(),
+                const SizedBox(height: 10),
                 Expanded(child: CommentSection(object: object))
               ],
             ),

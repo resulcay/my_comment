@@ -39,7 +39,7 @@ class BookCard extends StatelessWidget {
                   child: Hero(
                     tag: book.id,
                     child: Image.network(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       book.imagePath,
                       loadingBuilder: (context, child, loadingProgress) =>
                           NetworkImageHandler.imageNetworkHandler(

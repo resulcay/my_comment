@@ -1,6 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/models/book_model.dart';
 import 'package:my_comment/models/movie_model.dart';
 import 'package:my_comment/models/show_model.dart';
@@ -95,10 +97,30 @@ class FirebaseService {
       await _firestore.collection('users').doc(user.email).update({
         '${collection}Comments': [],
       });
+    }).then((value) {
+      if (collection == 'movie') {
+        Flushbar(
+          backgroundColor: ColorConstants.confirmedColor,
+          message: 'Tüm film veriniz silindi',
+          duration: const Duration(seconds: 2),
+        ).show(context);
+      } else if (collection == 'show') {
+        Flushbar(
+          backgroundColor: ColorConstants.confirmedColor,
+          message: 'Tüm dizi veriniz silindi',
+          duration: const Duration(seconds: 2),
+        ).show(context);
+      } else if (collection == 'book') {
+        Flushbar(
+          backgroundColor: ColorConstants.confirmedColor,
+          message: 'Tüm kitap veriniz silindi',
+          duration: const Duration(seconds: 2),
+        ).show(context);
+      }
     });
   }
 
-  removeAllUsersCommentData(String collection) async {
+  removeAllUsersCommentData(BuildContext context, String collection) async {
     await _firestore.collection('${collection}s').get().then((value) {
       for (var i = 0; i < value.docs.length; i++) {
         value.docs[i].reference.update({'comments': {}});
@@ -109,6 +131,17 @@ class FirebaseService {
         for (var i = 0; i < data.docs.length; i++) {
           data.docs[i].reference.update({
             '${collection}Comments': [],
+          }).then((_) {
+            if (collection == 'movie') {
+              Provider.of<UserService>(context, listen: false)
+                  .changeUserProperties(movieComments: []);
+            } else if (collection == 'show') {
+              Provider.of<UserService>(context, listen: false)
+                  .changeUserProperties(showComments: []);
+            } else if (collection == 'book') {
+              Provider.of<UserService>(context, listen: false)
+                  .changeUserProperties(bookComments: []);
+            }
           });
         }
       });

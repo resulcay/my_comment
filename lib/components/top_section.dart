@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/models/book_model.dart';
 import 'package:my_comment/models/movie_model.dart';
 import 'package:my_comment/models/show_model.dart';
 
-class TopSection extends StatelessWidget {
+class TopSection extends StatefulWidget {
   final Object object;
   const TopSection({
     super.key,
@@ -11,9 +12,44 @@ class TopSection extends StatelessWidget {
   });
 
   @override
+  State<TopSection> createState() => _TopSectionState();
+}
+
+class _TopSectionState extends State<TopSection>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> animationTween;
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    animationTween =
+        Tween<double>(begin: 0.0, end: 150.0).animate(animationController);
+
+    animationController.forward();
+
+    animationController.addListener(() {
+      setState(() {});
+      animationController.addStatusListener((status) {
+        if (status.name == 'completed') {
+          animationController.repeat(reverse: true);
+        }
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (object is MovieModel) {
-      MovieModel movie = object as MovieModel;
+    if (widget.object is MovieModel) {
+      MovieModel movie = widget.object as MovieModel;
       return SizedBox(
         width: double.infinity,
         child: Column(
@@ -32,9 +68,32 @@ class TopSection extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Row(
                 children: [
-                  Hero(
-                      tag: movie.id,
-                      child: Image.network(height: 150, movie.imagePath)),
+                  Stack(
+                    children: [
+                      Positioned(
+                        top: 10,
+                        left: 20,
+                        child: Container(
+                          height: 2,
+                          width: 2,
+                          margin: const EdgeInsets.only(top: 60),
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              blurRadius: 300,
+                              spreadRadius: animationTween.value,
+                              color: ColorConstants.secondaryColor,
+                            )
+                          ]),
+                        ),
+                      ),
+                      Hero(
+                          tag: movie.id,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child:
+                                  Image.network(height: 150, movie.imagePath))),
+                    ],
+                  ),
                   Expanded(
                     child: Center(
                       child: Column(
@@ -70,8 +129,8 @@ class TopSection extends StatelessWidget {
           ],
         ),
       );
-    } else if (object is ShowModel) {
-      ShowModel show = object as ShowModel;
+    } else if (widget.object is ShowModel) {
+      ShowModel show = widget.object as ShowModel;
       return SizedBox(
         width: double.infinity,
         child: Column(
@@ -90,9 +149,32 @@ class TopSection extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Row(
                 children: [
-                  Hero(
-                      tag: show.id,
-                      child: Image.network(height: 150, show.imagePath)),
+                  Stack(
+                    children: [
+                      Positioned(
+                        top: 10,
+                        left: 20,
+                        child: Container(
+                          height: 2,
+                          width: 2,
+                          margin: const EdgeInsets.only(top: 60),
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              blurRadius: 300,
+                              spreadRadius: animationTween.value,
+                              color: ColorConstants.secondaryColor,
+                            )
+                          ]),
+                        ),
+                      ),
+                      Hero(
+                          tag: show.id,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child:
+                                  Image.network(height: 150, show.imagePath))),
+                    ],
+                  ),
                   Expanded(
                     child: Center(
                       child: Column(
@@ -129,7 +211,7 @@ class TopSection extends StatelessWidget {
         ),
       );
     } else {
-      BookModel book = object as BookModel;
+      BookModel book = widget.object as BookModel;
 
       return SizedBox(
         width: double.infinity,
@@ -149,9 +231,32 @@ class TopSection extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Row(
                 children: [
-                  Hero(
-                      tag: book.id,
-                      child: Image.network(height: 150, book.imagePath)),
+                  Stack(
+                    children: [
+                      Positioned(
+                        top: 10,
+                        left: 20,
+                        child: Container(
+                          height: 2,
+                          width: 2,
+                          margin: const EdgeInsets.only(top: 60),
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              blurRadius: 300,
+                              spreadRadius: animationTween.value,
+                              color: ColorConstants.secondaryColor,
+                            )
+                          ]),
+                        ),
+                      ),
+                      Hero(
+                          tag: book.id,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child:
+                                  Image.network(height: 150, book.imagePath))),
+                    ],
+                  ),
                   Expanded(
                     child: Center(
                       child: Column(

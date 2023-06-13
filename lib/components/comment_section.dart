@@ -36,6 +36,7 @@ class _CommentSectionState extends State<CommentSection> {
 
       return Scaffold(
         body: ListView.builder(
+          padding: const EdgeInsets.all(10),
           itemCount: movie.comments.length,
           itemBuilder: (context, index) => FutureBuilder(
               future: FirebaseService().getUserById(ids[index]),
@@ -120,6 +121,7 @@ class _CommentSectionState extends State<CommentSection> {
 
       return Scaffold(
         body: ListView.builder(
+          padding: const EdgeInsets.all(10),
           itemCount: show.comments.length,
           itemBuilder: (context, index) => FutureBuilder(
               future: FirebaseService().getUserById(ids[index]),
@@ -204,6 +206,7 @@ class _CommentSectionState extends State<CommentSection> {
 
       return Scaffold(
         body: ListView.builder(
+          padding: const EdgeInsets.all(10),
           itemCount: book.comments.length,
           itemBuilder: (context, index) => FutureBuilder(
               future: FirebaseService().getUserById(ids[index]),

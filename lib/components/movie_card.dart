@@ -36,7 +36,7 @@ class MovieCard extends StatelessWidget {
                 child: Hero(
                   tag: movie.id,
                   child: Image.network(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     movie.imagePath,
                     loadingBuilder: (context, child, loadingProgress) =>
                         NetworkImageHandler.imageNetworkHandler(
