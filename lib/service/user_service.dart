@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
+import 'package:my_comment/models/user_model.dart';
 
+// Tüm uygulamada kullanılacak kullanıcı nesnesi değiştiğinde burada yönetilir.
 class UserService extends ChangeNotifier {
   UserModel? user;
 

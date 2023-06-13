@@ -48,6 +48,8 @@ class _DecoratedTextFieldState extends State<DecoratedTextField> {
                       checkIfClicked = !checkIfClicked;
                     });
                   },
+
+                  // Şifre girilirken metni gizler.
                   icon: checkIfClicked == true
                       ? const Icon(Icons.visibility)
                       : const Icon(Icons.visibility_off))

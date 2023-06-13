@@ -48,6 +48,8 @@ class _TopSectionState extends State<TopSection>
 
   @override
   Widget build(BuildContext context) {
+    // Gelen objenin farklı modeller olmasından dolayı if statement tanımlıyoruz.
+    // Dart'da "is" keyword'ü 'object.runtimeType == Type2' koşuluna denktir.
     if (widget.object is MovieModel) {
       MovieModel movie = widget.object as MovieModel;
       return SizedBox(

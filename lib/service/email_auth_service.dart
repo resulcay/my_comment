@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/auth_stream_controller.dart';
 
-class EmailAuthService extends ChangeNotifier {
+class EmailAuthService {
+  // Firebase Authentication nesnesidir.
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // Firebase Firestore nesnesidir.
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+// Kullanıcıyı verilen parametreleri kullanarak kayıt eder.
   Future<String> signUpUser({
-    required BuildContext context,
     required String email,
     required String password,
     required String repeatedPassword,
@@ -61,6 +63,7 @@ class EmailAuthService extends ChangeNotifier {
     return res;
   }
 
+// Oturum açar.
   Future<String> loginUser({
     required BuildContext context,
     required String email,
@@ -88,12 +91,14 @@ class EmailAuthService extends ChangeNotifier {
     return res;
   }
 
+// Çıkış yapar.
   Future<void> signOut(BuildContext context) async {
     await _auth.signOut().then((value) {
       _navigate(context);
     });
   }
 
+// Kullanıcı oturum durumu için bu yapıya yönlendirir.
   _navigate(BuildContext context) {
     Navigator.pushReplacement(
         context,

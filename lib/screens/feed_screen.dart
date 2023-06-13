@@ -13,10 +13,18 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Kullanıcı nesnemizdir.
     UserModel user = Provider.of<UserService>(context).user!;
+
+    // Yorum yapılan film sayısıdır.
     int movieCount = user.movieComments.length;
+
+    // Yorum yapılan dizi sayısıdır.
     int showCount = user.showComments.length;
+
+    // Yorum yapılan kitap sayısıdır.
     int bookCount = user.bookComments.length;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -90,6 +98,7 @@ class FeedScreen extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
+                // Kullanıcın tüm film yorumları ve oylamalarını siler ve Kullanıcı nesnesini günceller.
                 FirebaseService()
                     .removeCurrentUserCommentData(context, 'movie');
                 Provider.of<UserService>(context, listen: false)
@@ -102,6 +111,7 @@ class FeedScreen extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
+                // Kullanıcın tüm dizi yorumları ve oylamalarını siler ve Kullanıcı nesnesini günceller.
                 FirebaseService().removeCurrentUserCommentData(context, 'show');
                 Provider.of<UserService>(context, listen: false)
                     .changeUserProperties(showComments: []);
@@ -113,6 +123,7 @@ class FeedScreen extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
+                // Kullanıcın tüm kitap yorumları ve oylamalarını siler ve Kullanıcı nesnesini günceller.
                 FirebaseService().removeCurrentUserCommentData(context, 'book');
                 Provider.of<UserService>(context, listen: false)
                     .changeUserProperties(bookComments: []);
@@ -124,6 +135,8 @@ class FeedScreen extends StatelessWidget {
           //   width: double.infinity,
           //   child: OutlinedButton(
           //     onPressed: () {
+          //       // Tüm kullanıcıların film verisini siler
+          //       // kabul edilen parametreler : movie,show,book.
           //       FirebaseService().removeAllUsersCommentData(context, 'movie');
           //     },
           //     child: const Text('Tüm film verisini sil'),
@@ -132,9 +145,8 @@ class FeedScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(
-              onPressed: () {
-                FirebaseService().logOut();
-              },
+              // Oturumu kapatır.
+              onPressed: () => FirebaseService().logOut(),
               child: const Text('ÇIKIŞ YAP'),
             ),
           ),

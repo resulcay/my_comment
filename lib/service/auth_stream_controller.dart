@@ -13,15 +13,19 @@ class AuthStreamController extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          // Bekleme durumunda ekranın ortasında gösterilir.
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasData) {
+            // Başarılı bir oturumda anasayfa ya yönlendirir.
             return const HomeScreen();
           } else if (snapshot.hasError) {
+            // Hata durumunda altta gösterilir.
             return InfoSnackBar.showSnackBar("Bilinmeyen Hata!", context);
           } else {
+            // Aksi bir durumda giriş yapma ekranına yönlendirir.
             return const LoginScreen();
           }
         },

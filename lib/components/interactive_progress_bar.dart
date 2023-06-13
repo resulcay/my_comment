@@ -20,10 +20,18 @@ class InteractiveProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Kullanıcı nesnemizdir.
     UserModel user = Provider.of<UserService>(context).user!;
+
+    // Yorum yapılan film sayısıdır.
     int movieCount = user.movieComments.length;
+
+    // Yorum yapılan dizi sayısıdır.
     int showCount = user.showComments.length;
+
+    // Yorum yapılan kitap sayısıdır.
     int bookCount = user.bookComments.length;
+
     return FutureBuilder(
         future: function,
         builder: (context, snapshot) {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
+// Kitap modelimizdir.
 class BookModel {
   final String id;
   final String name;

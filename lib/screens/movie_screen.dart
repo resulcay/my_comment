@@ -13,9 +13,11 @@ class MovieScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      // Tüm filmleri getirir.
       future: FirebaseService().getAllMovies(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          // İstek başarılı ise dönen nesneyi film modeline atadığımız yerdir.
           List<MovieModel> movies = snapshot.data!;
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -47,15 +49,17 @@ class MovieScreen extends StatelessWidget {
             ),
           );
         }
+        // Bekleme durumunda gösterilir.
         return const Center(child: CircularProgressIndicator());
       },
     );
   }
 
-  _onTap(BuildContext context, MovieModel object) {
+  _onTap(BuildContext context, Object object) {
     Navigator.push(
         context,
         MaterialPageRoute(
+          // Göndermemiz gereken nesne dizi,film veya kitap olabildiği için Object şeklinde encapsule ediyoruz.
           builder: (context) => CommentScreen(object: object),
         ));
   }

@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
+          // Uygulamanın tümünde kullanmak üzere istek attığımız yerdir.
           future: FirebaseService().getUserDetails(context),
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -47,16 +48,22 @@ class _ViewWidget extends StatelessWidget {
         child: PageView(
           controller: pageController,
           onPageChanged: (value) =>
+              // Sayfa index inin değiştiğini haber verir.
               Provider.of<NavigationService>(context, listen: false)
                   .changePageIndex(value),
           children: const [
+            // Akış yani ana ekrandır.
             FeedScreen(),
+            // Film ekrandır.
             MovieScreen(),
+            // Dizi Ekranıdır.
             ShowScreen(),
+            // Kitap Ekranıdır.
             BookScreen(),
           ],
         ),
       ),
+      // Sayfalar arası geçiş yapmak için kullandığımız yapıdır.
       bottomNavigationBar: CurvedNavBar(pageController: pageController),
     );
   }

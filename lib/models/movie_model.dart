@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
+// Film modelimizdir.
 class MovieModel {
   final String id;
   final String name;

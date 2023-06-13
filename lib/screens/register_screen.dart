@@ -32,7 +32,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void signUpUser() async {
     String result = await EmailAuthService().signUpUser(
-      context: context,
       email: emailController.text,
       password: passwordController.text,
       repeatedPassword: passRepeatController.text,

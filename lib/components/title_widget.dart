@@ -18,6 +18,8 @@ class TitleWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
+
+        // Renk geçişi için kullandığımız bir yapıdır.
         gradient: LinearGradient(
           end: Alignment.centerRight,
           colors: colors,

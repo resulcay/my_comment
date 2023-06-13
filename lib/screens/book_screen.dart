@@ -13,9 +13,11 @@ class BookScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      // Tüm kitapları getirir.
       future: FirebaseService().getAllBooks(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          // İstek başarılı ise dönen nesneyi kitap modeline atadığımız yerdir.
           List<BookModel> books = snapshot.data!;
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -46,6 +48,7 @@ class BookScreen extends StatelessWidget {
             ),
           );
         }
+        // Bekleme durumunda gösterilir.
         return const Center(child: CircularProgressIndicator());
       },
     );

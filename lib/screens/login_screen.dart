@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  // Email ile giriş yaparken çağrılır.
   void loginUser() async {
     String result = await EmailAuthService().loginUser(
       context: context,
@@ -34,13 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
       password: passwordController.text,
     );
 
+    // Widget ekranda çizili değilken göstermemek için bu şart sağlanır.
     if (mounted) {
-      showSnack(result);
+      InfoSnackBar.showSnackBar(result, context);
     }
-  }
-
-  void showSnack(String res) {
-    InfoSnackBar.showSnackBar(res, context);
   }
 
   @override
@@ -133,8 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center,
                         child: TextButton(
                           onPressed: () {
-                            InfoSnackBar.showSnackBar(
-                                'Ekran Tasarlanmadı', context);
+                            // InfoSnackBar.showSnackBar(
+                            //     'Ekran Tasarlanmadı', context);
                           },
                           child: Text(
                             'Şifremi Unuttum',

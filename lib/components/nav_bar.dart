@@ -29,6 +29,7 @@ class CurvedNavBar extends StatelessWidget {
             curve: Curves.easeInOut);
       },
       items: const [
+        // Navigasyon kısmında gösterdiğimiz Widget yapılarıdır.
         Icon(
           Icons.home,
           color: Colors.white,

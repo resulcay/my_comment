@@ -13,9 +13,11 @@ class ShowScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      // Tüm dizileri getirir.
       future: FirebaseService().getAllShows(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          // İstek başarılı ise dönen nesneyi dizi modeline atadığımız yerdir.
           List<ShowModel> shows = snapshot.data!;
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -46,6 +48,7 @@ class ShowScreen extends StatelessWidget {
             ),
           );
         }
+        // Bekleme durumunda gösterilir.
         return const Center(child: CircularProgressIndicator());
       },
     );

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+// Dizi modelimizdir.
 class ShowModel {
   final String id;
   final String name;

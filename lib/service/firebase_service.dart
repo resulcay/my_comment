@@ -10,10 +10,15 @@ import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/user_service.dart';
 import 'package:provider/provider.dart';
 
+// Tüm Firestore işlemleri buradan yürütülür.
 class FirebaseService {
+  // Firebase Authentication nesnesidir.
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Firebase Firestore nesnesidir.
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Kullanıcı detaylarını getirir.
   Future<UserModel?> getUserDetails(BuildContext context) async {
     User currentUser = _auth.currentUser!;
     return await _firestore
@@ -23,7 +28,9 @@ class FirebaseService {
         .then((value) {
       dynamic data = value.data();
       if (data != null) {
+        // Başarılı bir istek atılmışsa modele atama yapar.
         UserModel dynamicUser = UserModel.fromMap(data);
+        // Üst class a haber verir.
         Provider.of<UserService>(context, listen: false).setUser(dynamicUser);
         return dynamicUser;
       }
@@ -31,6 +38,7 @@ class FirebaseService {
     });
   }
 
+  // Spesifik bir kullanıcı getirir.
   Future<UserModel> getUserById(String id) async {
     return await _firestore
         .collection('users')
@@ -39,6 +47,7 @@ class FirebaseService {
         .then((value) => UserModel.fromMap(value.docs.first.data()));
   }
 
+// Yorum ekler.
   addComment(
     BuildContext context,
     Object object,
@@ -77,6 +86,7 @@ class FirebaseService {
         .then((value) => value.docs.first.reference.update(updatedMap));
   }
 
+  // Anlık kullanıcın verilen kategoride tüm yorum ve oylama verilerini siler ve kullanıcıyı günceller.
   removeCurrentUserCommentData(BuildContext context, String collection) async {
     await _firestore.collection('${collection}s').get().then((value) async {
       UserModel user = Provider.of<UserService>(context, listen: false).user!;
@@ -120,6 +130,7 @@ class FirebaseService {
     });
   }
 
+  // Verilen kategoride tüm kullanıcıların yorum ve oylama verilerini siler ve modeli günceller.
   removeAllUsersCommentData(BuildContext context, String collection) async {
     await _firestore.collection('${collection}s').get().then((value) {
       for (var i = 0; i < value.docs.length; i++) {
@@ -148,42 +159,28 @@ class FirebaseService {
     });
   }
 
+  // Tüm filmleri liste şeklinde döndürür.
   Future<List<MovieModel>> getAllMovies() async {
     return await _firestore.collection('movies').get().then((value) {
       return value.docs.map((e) => MovieModel.fromMap(e.data())).toList();
     });
   }
 
-  addMovie() async {
-    // String uuid = const Uuid().v4();
-
-    // BookModel model = BookModel(
-    //     id: uuid,
-    //     name: 'Atomik Alışkanlıklar',
-    //     author: 'James Clear',
-    //     pages: 352,
-    //     imagePath:
-    //         'https://cdn.dsmcdn.com/ty583/product/media/images/20221101/14/205058687/611045146/1/1_org_zoom.jpg',
-    //     comments: {},
-    //     ratings: {});
-    // await _firestore
-    //     .collection('books')
-    //     .add(model.toMap())
-    //     .then((value) => print('Added'));
-  }
-
+  // Tüm dizileri liste şeklinde döndürür.
   Future<List<ShowModel>> getAllShows() async {
     return await _firestore.collection('shows').get().then((value) {
       return value.docs.map((e) => ShowModel.fromMap(e.data())).toList();
     });
   }
 
+  // Tüm kitapları liste şeklinde döndürür.
   Future<List<BookModel>> getAllBooks() async {
     return await _firestore.collection('books').get().then((value) {
       return value.docs.map((e) => BookModel.fromMap(e.data())).toList();
     });
   }
 
+// Kullanıcı oturumunu sonlandırır.
   logOut() {
     _auth.signOut();
   }

@@ -4,9 +4,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_comment/models/user_model.dart';
 
 class GoogleSignInProvider {
+  // GoogleSignIn paketinin nesnesidir.
   final googleSignIn = GoogleSignIn();
+  // Firebase Firestore nesnesidir.
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+// Oturum açar.
   Future<void> googleLogin() async {
     await googleSignIn.signIn().then((value) async {
       if (value == null) return;

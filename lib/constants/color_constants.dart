@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+// Uygulamanın tamamında kullanmak üzere bu classta topladığımız tüm özel renklerimizdir.
 class ColorConstants {
+  // Ana rengimizdir.
   static const primaryColor = Color(0xfffd7c4c);
+  // İkincil rengimizdir.
   static const secondaryColor = Color.fromARGB(255, 122, 21, 60);
   static const primaryVariant = Color.fromARGB(255, 209, 192, 189);
   static const starColor = Colors.red;

@@ -56,8 +56,13 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
             OutlinedButton(
                 onPressed: () async {
                   await FirebaseService().getUserDetails(context).then((user) {
+                    // Yorum textinin başındaki ve sonundaki boşlukları siler.
                     String refinedComment = controller.text.trim();
+
+                    // Inputların doğru olmaması durumunda uyarı gösterir.
                     _infoBar(star, refinedComment);
+
+                    // İstenen koşullar sağlanırsa ekleme yapar.
                     if (refinedComment.isNotEmpty &&
                         star != 0.0 &&
                         refinedComment.length >= 50) {

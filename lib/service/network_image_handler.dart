@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// İnternetten resim kullandığımızda oluşabilecek istisnalar için kurguladığımız senaryolardır.
 class NetworkImageHandler {
   static Widget imageNetworkHandler(
       BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {

@@ -20,8 +20,10 @@ class ActivityBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: LinearProgressBar(
+          // Toplam bar uzunluk değeridir.
           maxSteps: maxSteps,
           progressType: LinearProgressBar.progressTypeLinear,
+          // Anlık bar değeridir.
           currentStep: currentStep,
           minHeight: 20,
           progressColor: color,

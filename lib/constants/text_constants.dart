@@ -1,3 +1,4 @@
+// Uygulamanın tamamında kullanmak üzere bu classta topladığımız tüm metinlerimizdir.
 class TextConstants {
   static const List<String> tags = [
     'Yeni başlayan',

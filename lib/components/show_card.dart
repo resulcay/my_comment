@@ -38,9 +38,11 @@ class ShowCard extends StatelessWidget {
                   child: Image.network(
                     fit: BoxFit.fill,
                     show.imagePath,
+                    // Resim verisi yüklenirken kurguladığımız yapıdır.
                     loadingBuilder: (context, child, loadingProgress) =>
                         NetworkImageHandler.imageNetworkHandler(
                             context, child, loadingProgress),
+                    // Resim verisi yüklenirken hata oluştuğunda kurguladığımız yapıdır.
                     errorBuilder: (_, __, ___) => NetworkImageHandler.onError(),
                   ),
                 ),

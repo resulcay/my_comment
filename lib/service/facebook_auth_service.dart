@@ -4,9 +4,12 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../models/user_model.dart';
 
 class FacebookAuthService {
+  // Firebase Authentication nesnesidir.
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // Firebase Firestore nesnesidir.
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+// Oturum açar.
   facebookLogin() async {
     final LoginResult loginResult = await FacebookAuth.instance.login(
       permissions: [
@@ -18,6 +21,7 @@ class FacebookAuthService {
       final OAuthCredential credential =
           FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
+      // Oturum başarılı ise verilen mail adresi firestore'da mevcut değilse oluşturur.
       await _auth.signInWithCredential(credential).then((cred) async {
         if (cred.user != null) {
           await _firestore

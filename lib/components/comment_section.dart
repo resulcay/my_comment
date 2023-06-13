@@ -24,12 +24,20 @@ class CommentSection extends StatefulWidget {
 class _CommentSectionState extends State<CommentSection> {
   @override
   Widget build(BuildContext context) {
+    // Gelen objenin farklı modeller olmasından dolayı if statement tanımlıyoruz.
     if (widget.object is MovieModel) {
       MovieModel movie = widget.object as MovieModel;
 
+      // Film ID lerinin tutulduğu dizidir.
       List<String> ids = [];
+
+      // Film yorumlarının tutulduğu dizidir.
       List<String> comments = [];
+
+      // Film oylamalarının tutulduğu dizidir.
       List<double> ratings = [];
+
+      // Gelen Map yapılarını Listelere çevirdiğimiz operasyondur.
       movie.comments.keys.map((e) => ids.add(e)).toList();
       movie.comments.values.map((e) => comments.add(e)).toList();
       movie.ratings.values.map((e) => ratings.add(e.toDouble())).toList();
@@ -103,6 +111,7 @@ class _CommentSectionState extends State<CommentSection> {
                 builder: (context) => AddCommentDialog(object: movie));
           },
           child: Builder(builder: (context) {
+            // Kullanıcı daha önce yorum yapmışsa düzenle ikonu gösterir.
             UserModel currentUser = Provider.of<UserService>(context).user!;
             bool isFirst = movie.comments.keys.contains(currentUser.id);
             return Icon(isFirst ? Icons.edit : Icons.add);
@@ -112,9 +121,16 @@ class _CommentSectionState extends State<CommentSection> {
     } else if (widget.object is ShowModel) {
       ShowModel show = widget.object as ShowModel;
 
+      // Dizi ID lerinin tutulduğu dizidir(array).
       List<String> ids = [];
+
+      // Dizi yorumlarının tutulduğu dizidir(array).
       List<String> comments = [];
+
+      // Dizi oylamalarının tutulduğu dizidir(array).
       List<double> ratings = [];
+
+      // Gelen Map yapılarını Listelere çevirdiğimiz operasyondur.
       show.comments.keys.map((e) => ids.add(e)).toList();
       show.comments.values.map((e) => comments.add(e)).toList();
       show.ratings.values.map((e) => ratings.add(e.toDouble())).toList();
@@ -188,6 +204,7 @@ class _CommentSectionState extends State<CommentSection> {
                 builder: (context) => AddCommentDialog(object: widget.object));
           },
           child: Builder(builder: (context) {
+            // Kullanıcı daha önce yorum yapmışsa düzenle ikonu gösterir.
             UserModel currentUser = Provider.of<UserService>(context).user!;
             bool isFirst = show.comments.keys.contains(currentUser.id);
             return Icon(isFirst ? Icons.edit : Icons.add);
@@ -197,9 +214,16 @@ class _CommentSectionState extends State<CommentSection> {
     } else {
       BookModel book = widget.object as BookModel;
 
+      // Kitap ID lerinin tutulduğu dizidir.
       List<String> ids = [];
+
+      // Kitap yorumlarının tutulduğu dizidir.
       List<String> comments = [];
+
+      // Kitap oylamalarının tutulduğu dizidir.
       List<double> ratings = [];
+
+      // Gelen Map yapılarını Listelere çevirdiğimiz operasyondur.
       book.comments.keys.map((e) => ids.add(e)).toList();
       book.comments.values.map((e) => comments.add(e)).toList();
       book.ratings.values.map((e) => ratings.add(e.toDouble())).toList();
@@ -273,6 +297,7 @@ class _CommentSectionState extends State<CommentSection> {
                 builder: (context) => AddCommentDialog(object: widget.object));
           },
           child: Builder(builder: (context) {
+            // Kullanıcı daha önce yorum yapmışsa düzenle ikonu gösterir.
             UserModel currentUser = Provider.of<UserService>(context).user!;
             bool isFirst = book.comments.keys.contains(currentUser.id);
             return Icon(isFirst ? Icons.edit : Icons.add);
