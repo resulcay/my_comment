@@ -14,7 +14,7 @@ class AuthStreamController extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           // Bekleme durumunda ekranın ortasında gösterilir.
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.done) {
             return const Center(
               child: CircularProgressIndicator(),
             );

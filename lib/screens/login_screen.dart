@@ -161,9 +161,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: SignInButton(
                               Buttons.google,
                               text: 'Giriş Yap',
-                              onPressed: () {
-                                GoogleSignInProvider().googleLogin();
-                              },
+                              onPressed: () =>
+                                  GoogleSignInProvider().googleLogin(),
                             ),
                           ),
                           const SizedBox(width: 5),
@@ -171,9 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: SignInButton(
                               Buttons.facebook,
                               text: 'Giriş Yap',
-                              onPressed: () {
-                                FacebookAuthService().facebookLogin();
-                              },
+                              onPressed: () =>
+                                  FacebookAuthService().facebookLogin(context),
                             ),
                           )
                         ],

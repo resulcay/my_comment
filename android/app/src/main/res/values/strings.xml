@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Comment</string>
-    <string name="facebook_app_id">990188152008846</string>
-    <string name="fb_login_protocol_scheme">fb990188152008846</string>
-    <string name="facebook_client_token">784e105d2972d9131a1789e23c248b06</string>
+    <string name="facebook_app_id">178175878300691</string>
+    <string name="fb_login_protocol_scheme">fb178175878300691</string>
+    <string name="facebook_client_token">568e8e8c0512687cf95c2dddd7b832d9</string>
 </resources>

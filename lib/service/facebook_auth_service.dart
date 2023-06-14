@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:my_comment/components/info_snackbar.dart';
 import '../models/user_model.dart';
 
 class FacebookAuthService {
@@ -10,20 +12,20 @@ class FacebookAuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 // Oturum açar.
-  facebookLogin() async {
-    final LoginResult loginResult = await FacebookAuth.instance.login(
-      permissions: [
-        'email',
-        'public_profile',
-      ],
-    );
-    if (loginResult.status == LoginStatus.success) {
-      final OAuthCredential credential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+  Future facebookLogin(BuildContext context) async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login(
+        permissions: [
+          'email',
+          'public_profile',
+        ],
+      );
+      if (loginResult.status == LoginStatus.success) {
+        final OAuthCredential credential =
+            FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-      // Oturum başarılı ise verilen mail adresi firestore'da mevcut değilse oluşturur.
-      await _auth.signInWithCredential(credential).then((cred) async {
-        if (cred.user != null) {
+        // Oturum başarılı ise verilen mail adresi firestore'da mevcut değilse oluşturur.
+        await _auth.signInWithCredential(credential).then((cred) async {
           await _firestore
               .collection('users')
               .doc(cred.user!.email)
@@ -45,8 +47,11 @@ class FacebookAuthService {
                   .set(user.toMap());
             }
           });
-        }
-      });
+        });
+      }
+    } catch (e) {
+      InfoSnackBar.showSnackBar(
+          'Bu mail ile oturum açarken bir hata oluştu', context);
     }
   }
 }

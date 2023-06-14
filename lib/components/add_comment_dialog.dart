@@ -2,6 +2,9 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:my_comment/models/book_model.dart';
 import 'package:my_comment/models/show_model.dart';
+import 'package:my_comment/models/user_model.dart';
+import 'package:my_comment/service/user_service.dart';
+import 'package:provider/provider.dart';
 import 'package:rate/rate.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
@@ -55,62 +58,59 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
             ),
             OutlinedButton(
                 onPressed: () async {
-                  await FirebaseService().getUserDetails(context).then((user) {
-                    // Yorum textinin başındaki ve sonundaki boşlukları siler.
-                    String refinedComment = controller.text.trim();
+                  UserModel? user =
+                      Provider.of<UserService>(context, listen: false).user;
+                  // Yorum textinin başındaki ve sonundaki boşlukları siler.
+                  String refinedComment = controller.text.trim();
 
-                    // Inputların doğru olmaması durumunda uyarı gösterir.
-                    _infoBar(star, refinedComment);
+                  // Inputların doğru olmaması durumunda uyarı gösterir.
+                  _infoBar(star, refinedComment);
 
-                    // İstenen koşullar sağlanırsa ekleme yapar.
-                    if (refinedComment.isNotEmpty &&
-                        star != 0.0 &&
-                        refinedComment.length >= 50) {
-                      if (widget.object is MovieModel) {
-                        MovieModel movie = widget.object as MovieModel;
-                        movie.comments[user!.id] = refinedComment;
-                        movie.ratings[user.id] = star;
-                        FirebaseService()
-                            .addComment(context, movie, movie.id, movie.toMap(),
-                                'movies')
-                            .then((_) => Flushbar(
-                                  backgroundColor:
-                                      ColorConstants.confirmedColor,
-                                  message: 'Başarılı',
-                                  duration: const Duration(seconds: 2),
-                                ).show(context))
-                            .then((_) => Navigator.pop(context));
-                      } else if (widget.object is ShowModel) {
-                        ShowModel show = widget.object as ShowModel;
-                        show.comments[user!.id] = refinedComment;
-                        show.ratings[user.id] = star;
-                        FirebaseService()
-                            .addComment(
-                                context, show, show.id, show.toMap(), 'shows')
-                            .then((_) => Flushbar(
-                                  backgroundColor:
-                                      ColorConstants.confirmedColor,
-                                  message: 'Başarılı',
-                                  duration: const Duration(seconds: 2),
-                                ).show(context))
-                            .then((_) => Navigator.pop(context));
-                      } else {
-                        BookModel book = widget.object as BookModel;
-                        book.comments[user!.id] = refinedComment;
-                        book.ratings[user.id] = star;
-                        FirebaseService()
-                            .addComment(
-                                context, book, book.id, book.toMap(), 'books')
-                            .then((_) => Flushbar(
-                                  backgroundColor:
-                                      ColorConstants.confirmedColor,
-                                  message: 'Başarılı',
-                                  duration: const Duration(seconds: 2),
-                                ).show(context))
-                            .then((_) => Navigator.pop(context));
-                      }
+                  // İstenen koşullar sağlanırsa ekleme yapar.
+                  if (refinedComment.isNotEmpty &&
+                      star != 0.0 &&
+                      refinedComment.length >= 50) {
+                    if (widget.object is MovieModel) {
+                      MovieModel movie = widget.object as MovieModel;
+                      movie.comments[user!.id] = refinedComment;
+                      movie.ratings[user.id] = star;
+                      FirebaseService()
+                          .addComment(
+                              context, movie, movie.id, movie.toMap(), 'movies')
+                          .then((_) => Flushbar(
+                                backgroundColor: ColorConstants.confirmedColor,
+                                message: 'Başarılı',
+                                duration: const Duration(seconds: 2),
+                              ).show(context))
+                          .then((_) => Navigator.pop(context));
+                    } else if (widget.object is ShowModel) {
+                      ShowModel show = widget.object as ShowModel;
+                      show.comments[user!.id] = refinedComment;
+                      show.ratings[user.id] = star;
+                      FirebaseService()
+                          .addComment(
+                              context, show, show.id, show.toMap(), 'shows')
+                          .then((_) => Flushbar(
+                                backgroundColor: ColorConstants.confirmedColor,
+                                message: 'Başarılı',
+                                duration: const Duration(seconds: 2),
+                              ).show(context))
+                          .then((_) => Navigator.pop(context));
+                    } else {
+                      BookModel book = widget.object as BookModel;
+                      book.comments[user!.id] = refinedComment;
+                      book.ratings[user.id] = star;
+                      FirebaseService()
+                          .addComment(
+                              context, book, book.id, book.toMap(), 'books')
+                          .then((_) => Flushbar(
+                                backgroundColor: ColorConstants.confirmedColor,
+                                message: 'Başarılı',
+                                duration: const Duration(seconds: 2),
+                              ).show(context))
+                          .then((_) => Navigator.pop(context));
                     }
-                  });
+                  }
                 },
                 child: const Text('EKLE'))
           ],
@@ -120,24 +120,26 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
   }
 
   _infoBar(double star, String refinedComment) {
-    if (star == 0.0) {
-      Flushbar(
-        backgroundColor: ColorConstants.starColor,
-        message: 'Oylama Yapınız!',
-        duration: const Duration(seconds: 2),
-      ).show(context);
-    } else if (refinedComment.isEmpty) {
-      Flushbar(
-        backgroundColor: ColorConstants.starColor,
-        message: 'Yorum boş olamaz!',
-        duration: const Duration(seconds: 2),
-      ).show(context);
-    } else if (refinedComment.length < 50) {
-      Flushbar(
-        backgroundColor: ColorConstants.starColor,
-        message: 'Yorum en az 50 karakterden oluşmalı!',
-        duration: const Duration(seconds: 2),
-      ).show(context);
+    if (mounted) {
+      if (star == 0.0) {
+        Flushbar(
+          backgroundColor: ColorConstants.starColor,
+          message: 'Oylama Yapınız!',
+          duration: const Duration(seconds: 2),
+        ).show(context);
+      } else if (refinedComment.isEmpty) {
+        Flushbar(
+          backgroundColor: ColorConstants.starColor,
+          message: 'Yorum boş olamaz!',
+          duration: const Duration(seconds: 2),
+        ).show(context);
+      } else if (refinedComment.length < 50) {
+        Flushbar(
+          backgroundColor: ColorConstants.starColor,
+          message: 'Yorum en az 50 karakterden oluşmalı!',
+          duration: const Duration(seconds: 2),
+        ).show(context);
+      }
     }
   }
 }

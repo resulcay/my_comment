@@ -20,6 +20,7 @@ class FirebaseService {
 
   // Kullanıcı detaylarını getirir.
   Future<UserModel?> getUserDetails(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 3));
     User currentUser = _auth.currentUser!;
     return await _firestore
         .collection('users')
@@ -55,7 +56,7 @@ class FirebaseService {
     Map<String, dynamic> updatedMap,
     String collection,
   ) async {
-    UserModel? user = await getUserDetails(context);
+    UserModel? user = Provider.of<UserService>(context, listen: false).user;
     if (object is MovieModel) {
       List<String> commentsWithId = user!.movieComments;
       commentsWithId.add(objectId);

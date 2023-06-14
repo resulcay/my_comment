@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_comment/components/info_snackbar.dart';
 import 'package:my_comment/components/interactive_progress_bar.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/enums/category_enum.dart';
 import 'package:my_comment/models/user_model.dart';
 import 'package:my_comment/service/firebase_service.dart';
+import 'package:my_comment/service/navigation_service.dart';
 import 'package:my_comment/service/path_service.dart';
 import 'package:my_comment/service/user_service.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedScreen extends StatelessWidget {
   const FeedScreen({super.key});
@@ -131,6 +134,23 @@ class FeedScreen extends StatelessWidget {
               child: const Text('Kullanıcı kitap verisini sil'),
             ),
           ),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () async {
+                String address = 'https://google.com';
+                final Uri url = Uri.parse(address);
+
+                launchUrl(url).then((value) {
+                  if (!value) {
+                    InfoSnackBar.showSnackBar(
+                        'Yönlendirme başarısız: $url', context);
+                  }
+                });
+              },
+              child: const Icon(Icons.launch),
+            ),
+          ),
           // SizedBox(
           //   width: double.infinity,
           //   child: OutlinedButton(
@@ -146,7 +166,11 @@ class FeedScreen extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               // Oturumu kapatır.
-              onPressed: () => FirebaseService().logOut(),
+              onPressed: () {
+                FirebaseService().logOut();
+                Provider.of<NavigationService>(context, listen: false)
+                    .changePageIndex(0);
+              },
               child: const Text('ÇIKIŞ YAP'),
             ),
           ),
