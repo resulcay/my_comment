@@ -7,6 +7,7 @@ import 'package:my_comment/screens/show_screen.dart';
 import 'package:my_comment/service/firebase_service.dart';
 import 'package:my_comment/screens/movie_screen.dart';
 import 'package:my_comment/service/navigation_service.dart';
+import 'package:my_comment/service/path_service.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,7 +24,20 @@ class HomeScreen extends StatelessWidget {
           future: FirebaseService().getUserDetails(context),
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LinearProgressIndicator();
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const LinearProgressIndicator(),
+                  const Spacer(),
+                  Image.asset(
+                    scale: 4,
+                    PathService.imagePathProvider(
+                      'icon_wide.png',
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              );
             } else if (snapshot.hasData) {
               return const _ViewWidget();
             } else {
