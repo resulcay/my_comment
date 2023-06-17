@@ -16,7 +16,7 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 94,
+      height: 170,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
@@ -31,7 +31,6 @@ class BookCard extends StatelessWidget {
             children: [
               SizedBox(
                 width: 125,
-                height: 150,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -39,7 +38,7 @@ class BookCard extends StatelessWidget {
                   child: Hero(
                     tag: book.id,
                     child: Image.network(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       book.imagePath,
                       // Resim verisi yüklenirken kurguladığımız yapıdır.
                       loadingBuilder: (context, child, loadingProgress) =>
@@ -55,7 +54,7 @@ class BookCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -72,18 +71,21 @@ class BookCard extends StatelessWidget {
                         ConstrainedBox(
                           constraints:
                               BoxConstraints(maxWidth: context.width * .6),
-                          child: Text(
-                            book.name,
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.apply(
-                                    color: ColorConstants.lavender,
-                                    fontSizeDelta: -4,
-                                    fontWeightDelta: 3),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              book.name,
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.apply(
+                                      color: ColorConstants.lavender,
+                                      fontSizeDelta: 0,
+                                      fontWeightDelta: 3),
+                            ),
                           ),
                         ),
                         const Flexible(
@@ -97,37 +99,20 @@ class BookCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              book.author,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.apply(
-                                      color: ColorConstants.lavender,
-                                      fontStyle: FontStyle.italic),
-                            ),
-                            Text(
-                              '${book.pages.toString()} sayfa',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.apply(
-                                      color: ColorConstants.lavender,
-                                      fontWeightDelta: 1),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                    Text(
+                      book.author,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.titleMedium?.apply(
+                          color: ColorConstants.lavender,
+                          fontSizeDelta: 3,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    Text(
+                      '${book.pages.toString()} sayfa',
+                      style: Theme.of(context).textTheme.titleMedium?.apply(
+                          color: ColorConstants.lavender, fontWeightDelta: 1),
+                    ),
                   ],
                 ),
               )

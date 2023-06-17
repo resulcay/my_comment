@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: ColorConstants.secondaryColor,
+                          backgroundColor: ColorConstants.primaryColor,
                           foregroundColor: ColorConstants.primaryVariant,
                           fixedSize: const Size(double.infinity, 60),
                           shape: RoundedRectangleBorder(

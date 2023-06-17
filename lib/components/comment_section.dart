@@ -82,7 +82,7 @@ class _CommentSectionState extends State<CommentSection> {
                             Rate(
                               iconSize: 25,
                               allowHalf: true,
-                              color: ColorConstants.starColor,
+                              color: ColorConstants.secondaryColor,
                               allowClear: false,
                               initialValue: ratings[index],
                               readOnly: true,
@@ -175,7 +175,7 @@ class _CommentSectionState extends State<CommentSection> {
                             Rate(
                               iconSize: 25,
                               allowHalf: true,
-                              color: ColorConstants.starColor,
+                              color: ColorConstants.secondaryColor,
                               allowClear: false,
                               initialValue: ratings[index],
                               readOnly: true,
@@ -268,7 +268,7 @@ class _CommentSectionState extends State<CommentSection> {
                             Rate(
                               iconSize: 25,
                               allowHalf: true,
-                              color: ColorConstants.starColor,
+                              color: ColorConstants.secondaryColor,
                               allowClear: false,
                               initialValue: ratings[index],
                               readOnly: true,

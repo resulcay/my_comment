@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:my_comment/components/info_snackbar.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/extensions/media_query_extension.dart';
@@ -56,9 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                      width: context.width * .8,
-                      PathService.imagePathProvider('my_comment.png')),
+                  SvgPicture.asset(
+                      width: context.width,
+                      PathService.imagePathProvider('review.svg')),
                   Column(
                     children: [
                       Row(
@@ -124,20 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderSide: const BorderSide(width: 0)),
                           fillColor: ColorConstants.pureWhite.withOpacity(.7),
                           filled: true,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Align(
-                        alignment: Alignment.center,
-                        child: TextButton(
-                          onPressed: () {
-                            // InfoSnackBar.showSnackBar(
-                            //     'Ekran Tasarlanmadı', context);
-                          },
-                          child: Text(
-                            'Şifremi Unuttum',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
                         ),
                       ),
                     ],

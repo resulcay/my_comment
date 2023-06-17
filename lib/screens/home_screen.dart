@@ -24,19 +24,13 @@ class HomeScreen extends StatelessWidget {
           future: FirebaseService().getUserDetails(context),
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const LinearProgressIndicator(),
-                  const Spacer(),
-                  Image.asset(
-                    scale: 4,
-                    PathService.imagePathProvider(
-                      'icon_wide.png',
-                    ),
+              return Center(
+                child: Image.asset(
+                  height: 200,
+                  PathService.imagePathProvider(
+                    'comment_indicator.gif',
                   ),
-                  const Spacer(),
-                ],
+                ),
               );
             } else if (snapshot.hasData) {
               return const _ViewWidget();

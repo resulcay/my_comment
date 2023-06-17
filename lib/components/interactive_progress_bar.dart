@@ -66,8 +66,7 @@ class InteractiveProgressBar extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(width: 1)),
                             child: Text(
-                              (tags.length <= length &&
-                                      tags.length >= movieCount)
+                              (tags.length > movieCount)
                                   ? tags[movieCount]
                                   : tags.last,
                               style: Theme.of(context).textTheme.titleMedium,

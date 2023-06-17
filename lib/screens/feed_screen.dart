@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_comment/components/info_snackbar.dart';
 import 'package:my_comment/components/interactive_progress_bar.dart';
 import 'package:my_comment/constants/color_constants.dart';
 import 'package:my_comment/enums/category_enum.dart';
@@ -9,7 +8,6 @@ import 'package:my_comment/service/navigation_service.dart';
 import 'package:my_comment/service/path_service.dart';
 import 'package:my_comment/service/user_service.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class FeedScreen extends StatelessWidget {
   const FeedScreen({super.key});
@@ -93,7 +91,7 @@ class FeedScreen extends StatelessWidget {
           ),
           InteractiveProgressBar(
             category: Category.book,
-            barColor: ColorConstants.starColor,
+            barColor: ColorConstants.secondaryColor,
             function: FirebaseService().getAllBooks(),
           ),
           const SizedBox(height: 20),
@@ -132,23 +130,6 @@ class FeedScreen extends StatelessWidget {
                     .changeUserProperties(bookComments: []);
               },
               child: const Text('Kullanıcı kitap verisini sil'),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: () async {
-                String address = 'https://google.com';
-                final Uri url = Uri.parse(address);
-
-                launchUrl(url).then((value) {
-                  if (!value) {
-                    InfoSnackBar.showSnackBar(
-                        'Yönlendirme başarısız: $url', context);
-                  }
-                });
-              },
-              child: const Icon(Icons.launch),
             ),
           ),
           // SizedBox(

@@ -39,7 +39,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
           children: [
             Rate(
               iconSize: 40,
-              color: ColorConstants.starColor,
+              color: ColorConstants.secondaryColor,
               allowHalf: true,
               allowClear: true,
               initialValue: 3.0,
@@ -64,7 +64,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
                   String refinedComment = controller.text.trim();
 
                   // Inputların doğru olmaması durumunda uyarı gösterir.
-                  _infoBar(star, refinedComment);
+                  _infoBar(context, star, refinedComment);
 
                   // İstenen koşullar sağlanırsa ekleme yapar.
                   if (refinedComment.isNotEmpty &&
@@ -119,23 +119,23 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
     );
   }
 
-  _infoBar(double star, String refinedComment) {
-    if (mounted) {
+  _infoBar(BuildContext context, double star, String refinedComment) {
+    if (context.mounted) {
       if (star == 0.0) {
         Flushbar(
-          backgroundColor: ColorConstants.starColor,
+          backgroundColor: ColorConstants.secondaryColor,
           message: 'Oylama Yapınız!',
           duration: const Duration(seconds: 2),
         ).show(context);
       } else if (refinedComment.isEmpty) {
         Flushbar(
-          backgroundColor: ColorConstants.starColor,
+          backgroundColor: ColorConstants.secondaryColor,
           message: 'Yorum boş olamaz!',
           duration: const Duration(seconds: 2),
         ).show(context);
       } else if (refinedComment.length < 50) {
         Flushbar(
-          backgroundColor: ColorConstants.starColor,
+          backgroundColor: ColorConstants.secondaryColor,
           message: 'Yorum en az 50 karakterden oluşmalı!',
           duration: const Duration(seconds: 2),
         ).show(context);

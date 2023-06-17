@@ -15,7 +15,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 94,
+      height: 160,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class MovieCard extends StatelessWidget {
                 child: Hero(
                   tag: movie.id,
                   child: Image.network(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     movie.imagePath,
                     // Resim verisi yüklenirken kurguladığımız yapıdır.
                     loadingBuilder: (context, child, loadingProgress) =>
@@ -50,72 +50,39 @@ class MovieCard extends StatelessWidget {
             ),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      const Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Divider(
-                            thickness: 1,
-                            color: ColorConstants.richBlack,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        movie.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.apply(fontSizeDelta: -5, fontWeightDelta: 3),
-                      ),
-                      const Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Divider(
-                            thickness: 1,
-                            color: ColorConstants.richBlack,
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    movie.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.apply(fontSizeDelta: 3, fontWeightDelta: 3),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${movie.year.toString()} yapımı',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.apply(fontStyle: FontStyle.italic),
-                          ),
-                          Text(
-                            '${movie.imdb.toString()} IMDB',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.apply(fontWeightDelta: 1),
-                          ),
-                          Text(
-                            '${movie.duration.toString()} dakika',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.apply(fontStyle: FontStyle.italic),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
+                  Text(
+                    '${movie.year.toString()} yapımı',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.apply(fontSizeDelta: 3, fontStyle: FontStyle.italic),
+                  ),
+                  Text(
+                    '${movie.imdb.toString()} IMDB',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.apply(fontSizeDelta: 2, fontWeightDelta: 1),
+                  ),
+                  Text(
+                    '${movie.duration.toString()} dakika',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.apply(fontSizeDelta: 3, fontStyle: FontStyle.italic),
+                  ),
                 ],
               ),
             )

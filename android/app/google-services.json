@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1052483233542",
-    "project_id": "my-comment-eefc3",
-    "storage_bucket": "my-comment-eefc3.appspot.com"
+    "project_number": "592572358597",
+    "project_id": "my-comment-98823",
+    "storage_bucket": "my-comment-98823.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1052483233542:android:6854e65a0d5c2e1842e087",
+        "mobilesdk_app_id": "1:592572358597:android:1b702b28c7baade269b5ac",
         "android_client_info": {
           "package_name": "com.example.my_comment"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1052483233542-pohlg24edeb9kave55ei81gs3bb0fbpm.apps.googleusercontent.com",
+          "client_id": "592572358597-nui25mvasp60p8d266rajus8u4a95jgg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDdh8rAmN_EZBL3YbpF6H2wY_oxY-xVYIc"
+          "current_key": "AIzaSyBia6ODzNVxQVsRn2-UofXGgfn76KPlrZY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1052483233542-pohlg24edeb9kave55ei81gs3bb0fbpm.apps.googleusercontent.com",
+              "client_id": "592572358597-nui25mvasp60p8d266rajus8u4a95jgg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

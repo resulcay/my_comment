@@ -15,7 +15,7 @@ class ShowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 94,
+      height: 170,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class ShowCard extends StatelessWidget {
                 child: Hero(
                   tag: show.id,
                   child: Image.network(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     show.imagePath,
                     // Resim verisi yüklenirken kurguladığımız yapıdır.
                     loadingBuilder: (context, child, loadingProgress) =>
@@ -51,72 +51,49 @@ class ShowCard extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      const Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Divider(
-                            thickness: 1,
-                            color: ColorConstants.richBlack,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        show.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge?.apply(
-                            color: ColorConstants.pureBlack,
-                            fontSizeDelta: -5,
-                            fontWeightDelta: 3),
-                      ),
-                      const Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Divider(
-                            thickness: 1,
-                            color: ColorConstants.richBlack,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${show.season.toString()} sezon',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.apply(fontStyle: FontStyle.italic),
-                          ),
-                          Text(
-                            '${show.episodes.toString()} bölüm',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.apply(fontWeightDelta: 1),
-                          ),
-                          Text(
-                            '${show.genre} türünde',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.apply(fontStyle: FontStyle.italic),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    width: double.infinity,
+                    height: 35,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        color: ColorConstants.primaryColor,
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(20))),
+                    child: Text(
+                      show.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge?.apply(
+                          color: ColorConstants.pureWhite,
+                          fontSizeDelta: 0,
+                          fontWeightDelta: 3),
                     ),
-                  )
+                  ),
+                  Text(
+                    '${show.season.toString()} sezon',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.apply(fontSizeDelta: 3, fontStyle: FontStyle.italic),
+                  ),
+                  Text(
+                    '${show.episodes.toString()} bölüm',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.apply(fontSizeDelta: 3, fontWeightDelta: 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      '${show.genre} türünde',
+                      style: Theme.of(context).textTheme.titleMedium?.apply(
+                          fontSizeDelta: 3, fontStyle: FontStyle.italic),
+                    ),
+                  ),
                 ],
               ),
             )

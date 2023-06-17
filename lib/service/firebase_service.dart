@@ -181,6 +181,20 @@ class FirebaseService {
     });
   }
 
+  // addBook() async {
+  //   String uuid = const Uuid().v4();
+  //   BookModel book = BookModel(
+  //       id: uuid,
+  //       name: 'Hayvan Çiftliği',
+  //       author: 'George Orwell',
+  //       pages: 152,
+  //       imagePath:
+  //           'https://i.dr.com.tr/cache/600x600-0/originals/0000000105409-1.jpg',
+  //       comments: {},
+  //       ratings: {});
+  //   await _firestore.collection('books').add(book.toMap());
+  // }
+
 // Kullanıcı oturumunu sonlandırır.
   logOut() {
     _auth.signOut();
