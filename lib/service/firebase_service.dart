@@ -35,11 +35,12 @@ class FirebaseService {
         Provider.of<UserService>(context, listen: false).setUser(dynamicUser);
         return dynamicUser;
       }
+      // Aksi bir durumda null döner.
       return null;
     });
   }
 
-  // Spesifik bir kullanıcı getirir.
+  // Spesifik bir kullanıcı getirir (id ile).
   Future<UserModel> getUserById(String id) async {
     return await _firestore
         .collection('users')
@@ -181,22 +182,6 @@ class FirebaseService {
     });
   }
 
-  // addBook() async {
-  //   String uuid = const Uuid().v4();
-  //   BookModel book = BookModel(
-  //       id: uuid,
-  //       name: 'Hayvan Çiftliği',
-  //       author: 'George Orwell',
-  //       pages: 152,
-  //       imagePath:
-  //           'https://i.dr.com.tr/cache/600x600-0/originals/0000000105409-1.jpg',
-  //       comments: {},
-  //       ratings: {});
-  //   await _firestore.collection('books').add(book.toMap());
-  // }
-
 // Kullanıcı oturumunu sonlandırır.
-  logOut() {
-    _auth.signOut();
-  }
+  logOut() => _auth.signOut();
 }

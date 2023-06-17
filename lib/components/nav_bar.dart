@@ -21,9 +21,10 @@ class CurvedNavBar extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       index: Provider.of<NavigationService>(context).pageIndex,
       onTap: (index) {
+        // Sayfa indeksinin değiştiği yerdir.
         Provider.of<NavigationService>(context, listen: false)
             .changePageIndex(index);
-
+        // Geçişin animasyonlu olması burada sağlanır.
         pageController.animateToPage(index,
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeInOut);

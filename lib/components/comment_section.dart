@@ -37,7 +37,7 @@ class _CommentSectionState extends State<CommentSection> {
       // Film oylamalarının tutulduğu dizidir.
       List<double> ratings = [];
 
-      // Gelen Map yapılarını Listelere çevirdiğimiz operasyondur.
+      // Gelen Map yapılarını Listelere çevirdiğimiz operasyonlardır.
       movie.comments.keys.map((e) => ids.add(e)).toList();
       movie.comments.values.map((e) => comments.add(e)).toList();
       movie.ratings.values.map((e) => ratings.add(e.toDouble())).toList();

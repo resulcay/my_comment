@@ -23,7 +23,6 @@ dependencies:
   rate: ^0.0.2
   curved_navigation_bar: ^1.0.3
   flutter_svg: ^2.0.5
-  url_launcher: ^6.1.11
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

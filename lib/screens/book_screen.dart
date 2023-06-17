@@ -54,6 +54,7 @@ class BookScreen extends StatelessWidget {
     );
   }
 
+  // Butona tıklandığında detay ve yorum sayfasına yönlendirir.
   _onTap(BuildContext context, Object object) {
     Navigator.push(
         context,

@@ -66,6 +66,8 @@ class InteractiveProgressBar extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(width: 1)),
                             child: Text(
+                              // Sıfat sayısını toplam bar uzunluğundan küçük olması şartını tanımlıyoruz.
+                              // Aksi halde son sıfat gösterilir.
                               (tags.length > movieCount)
                                   ? tags[movieCount]
                                   : tags.last,
@@ -104,9 +106,10 @@ class InteractiveProgressBar extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(width: 1)),
                             child: Text(
-                              (tags.length <= length &&
-                                      tags.length >= showCount)
-                                  ? tags[showCount]
+                              // Sıfat sayısını toplam bar uzunluğundan küçük olması şartını tanımlıyoruz.
+                              // Aksi halde son sıfat gösterilir.
+                              (tags.length > movieCount)
+                                  ? tags[movieCount]
                                   : tags.last,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
@@ -143,9 +146,10 @@ class InteractiveProgressBar extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(width: 1)),
                             child: Text(
-                              (tags.length <= length &&
-                                      tags.length >= bookCount)
-                                  ? tags[bookCount]
+                              // Sıfat sayısını toplam bar uzunluğundan küçük olması şartını tanımlıyoruz.
+                              // Aksi halde son sıfat gösterilir.
+                              (tags.length > movieCount)
+                                  ? tags[movieCount]
                                   : tags.last,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),

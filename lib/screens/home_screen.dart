@@ -20,9 +20,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-          // Uygulamanın tümünde kullanmak üzere istek attığımız yerdir.
+          // Uygulamanın tümünde kullanmak üzere veritabanından kullanıcı verisini istediğimiz yerdir.
           future: FirebaseService().getUserDetails(context),
           builder: (_, snapshot) {
+            // Bekleme durumunda gösterilir.
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: Image.asset(
@@ -32,8 +33,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               );
+              // Kullanıcı verisi mevcut ise uygulama ekranı açılır.
             } else if (snapshot.hasData) {
               return const _ViewWidget();
+              // Aksi halde giriş yapma ekranına yönlendirir.
             } else {
               return const LoginScreen();
             }

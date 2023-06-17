@@ -17,6 +17,8 @@ class TopSection extends StatefulWidget {
 
 class _TopSectionState extends State<TopSection>
     with SingleTickerProviderStateMixin {
+  // Animasyon için gerekli yapılardır.
+  // Widget stateful olmalıdır.
   late AnimationController animationController;
   late Animation<double> animationTween;
   @override

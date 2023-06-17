@@ -14,17 +14,19 @@ class FacebookAuthService {
 // Oturum açar.
   Future facebookLogin(BuildContext context) async {
     try {
+      // Facebook oturum pop up'ı kapandığında verilen sonucu döndürür.
       final LoginResult loginResult = await FacebookAuth.instance.login(
         permissions: [
           'email',
           'public_profile',
         ],
       );
+      // Sonuç başarılı ise bu koşula girer.
       if (loginResult.status == LoginStatus.success) {
         final OAuthCredential credential =
             FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-        // Oturum başarılı ise verilen mail adresi firestore'da mevcut değilse oluşturur.
+        // Verilen mail adresi veritabanında mevcut değilse oluşturur.
         await _auth.signInWithCredential(credential).then((cred) async {
           await _firestore
               .collection('users')

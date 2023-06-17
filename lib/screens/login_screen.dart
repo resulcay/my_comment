@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
+  // Widget ekrandan silindiğinde bellekteki karşılığı burada silinir(GC).
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Email ile giriş yaparken çağrılır.
   void loginUser() async {
+    // Geri dönüte göre bir bilgilendirme metni tutan değişkendir.
     String result = await EmailAuthService().loginUser(
       context: context,
       email: emailController.text,
@@ -70,15 +72,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegisterScreen(),
+
+                              // Üye ol ekranına yönlendirir.
+                              onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterScreen(),
+                                    ),
                                   ),
-                                );
-                              },
                               child: const Text('ÜYE OL'))
                         ],
                       ),

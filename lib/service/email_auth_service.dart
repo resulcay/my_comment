@@ -17,9 +17,11 @@ class EmailAuthService {
     required String repeatedPassword,
     required String name,
   }) async {
+    // Varsayılan hata bilgilendirme mesajıdır.
     String res = 'Bilinmeyen Hata!';
 
     try {
+      // Parametrelerin boş olmama ve şifrelerim aynı olması şartlarını koştuğumuz yerdir.
       if (email.isNotEmpty &&
           password.isNotEmpty &&
           repeatedPassword.isNotEmpty &&
@@ -30,6 +32,7 @@ class EmailAuthService {
           password: password,
         );
 
+        // Varsayılan kullanıcı modelidir.
         UserModel user = UserModel(
           id: cred.user!.uid,
           name: name,
@@ -39,10 +42,12 @@ class EmailAuthService {
           bookComments: [],
         );
 
+        // Bu kullanıcıyı olduğu değerlerle veritabanına kaydeder.
         await _firestore
             .collection('users')
             .doc(cred.user!.email)
             .set(user.toMap());
+        // Durum başarılı demektir.
         res = 'success';
       } else {
         if (password != repeatedPassword) {
@@ -51,6 +56,8 @@ class EmailAuthService {
           res = 'Tüm alanları doldurun!';
         }
       }
+
+      // Bu istisna ortaya çıktığında bilgilendirme mesajını düzenlediğimiz yerdir.
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
         res = 'Email formatı hatalı!';
@@ -60,6 +67,7 @@ class EmailAuthService {
     } catch (err) {
       res = err.toString();
     }
+    // Bilgilendirme mesajını döndürür.
     return res;
   }
 
@@ -69,9 +77,11 @@ class EmailAuthService {
     required String email,
     required String password,
   }) async {
+    // Varsayılan hata bildirme metnidir.
     String res = "Bilinmeyen Hata";
 
     try {
+      // Metinler boş değilse bu koşul sağlanır.
       if (email.isNotEmpty && password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
@@ -79,6 +89,7 @@ class EmailAuthService {
       } else {
         res = "Tüm alanları doldurun!";
       }
+      // Bu istisna ortaya çıktığında bilgilendirme mesajını düzenlediğimiz yerdir.
     } on FirebaseAuthException catch (err) {
       if (err.code == 'user-not-found') {
         res = 'Kullanıcı bulunamadı!';
@@ -88,6 +99,8 @@ class EmailAuthService {
     } catch (err) {
       res = err.toString();
     }
+
+    // Bilgilendirme mesajını döndürür.
     return res;
   }
 

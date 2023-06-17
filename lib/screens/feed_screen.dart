@@ -14,7 +14,7 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Kullanıcı nesnemizdir.
+    // Kullanıcı nesnesidir.
     UserModel user = Provider.of<UserService>(context).user!;
 
     // Yorum yapılan film sayısıdır.
