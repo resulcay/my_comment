@@ -75,7 +75,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
                   // İstenen koşullar sağlanırsa ekleme yapar.
                   if (refinedComment.isNotEmpty &&
                       star != 0.0 &&
-                      refinedComment.length >= 50) {
+                      refinedComment.length >= 10) {
                     // Obje 3 farklı modelde olabileceği için şart ekliyoruz.
                     if (widget.object is MovieModel) {
                       MovieModel movie = widget.object as MovieModel;
@@ -148,10 +148,10 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
           duration: const Duration(seconds: 2),
         ).show(context);
         // Yorum istenilen değerden küçükse gösterilir.
-      } else if (refinedComment.length < 50) {
+      } else if (refinedComment.length < 10) {
         Flushbar(
           backgroundColor: ColorConstants.secondaryColor,
-          message: 'Yorum en az 50 karakterden oluşmalı!',
+          message: 'Yorum en az 10 karakterden oluşmalı!',
           duration: const Duration(seconds: 2),
         ).show(context);
       }

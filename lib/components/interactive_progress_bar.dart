@@ -108,8 +108,8 @@ class InteractiveProgressBar extends StatelessWidget {
                             child: Text(
                               // Sıfat sayısını toplam bar uzunluğundan küçük olması şartını tanımlıyoruz.
                               // Aksi halde son sıfat gösterilir.
-                              (tags.length > movieCount)
-                                  ? tags[movieCount]
+                              (tags.length > showCount)
+                                  ? tags[showCount]
                                   : tags.last,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
@@ -148,8 +148,8 @@ class InteractiveProgressBar extends StatelessWidget {
                             child: Text(
                               // Sıfat sayısını toplam bar uzunluğundan küçük olması şartını tanımlıyoruz.
                               // Aksi halde son sıfat gösterilir.
-                              (tags.length > movieCount)
-                                  ? tags[movieCount]
+                              (tags.length > bookCount)
+                                  ? tags[bookCount]
                                   : tags.last,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),

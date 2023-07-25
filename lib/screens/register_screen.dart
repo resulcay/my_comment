@@ -80,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: context.height,
                 width: context.width,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     SizedBox(
                       height: 200,
@@ -115,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 40),
+                      padding: const EdgeInsets.symmetric(vertical: 50),
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           backgroundColor: ColorConstants.primaryColor,

@@ -132,17 +132,6 @@ class FeedScreen extends StatelessWidget {
               child: const Text('Kullanıcı kitap verisini sil'),
             ),
           ),
-          // SizedBox(
-          //   width: double.infinity,
-          //   child: OutlinedButton(
-          //     onPressed: () {
-          //       // Tüm kullanıcıların film verisini siler
-          //       // kabul edilen parametreler : movie,show,book.
-          //       FirebaseService().removeAllUsersCommentData(context, 'movie');
-          //     },
-          //     child: const Text('Tüm film verisini sil'),
-          //   ),
-          // ),
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(
